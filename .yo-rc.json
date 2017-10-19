@@ -1,0 +1,16 @@
+{
+  "generator-ngx-rocket": {
+    "version": "2.1.3",
+    "props": {
+      "appName": "Los Angeles Mikvah Society",
+      "target": [
+        "web"
+      ],
+      "ui": "bootstrap",
+      "auth": true,
+      "projectName": "los-angeles-mikvah-society",
+      "mobile": [],
+      "webview": []
+    }
+  }
+}
