@@ -16,7 +16,7 @@ export interface RandomQuoteContext {
 }
 
 @Injectable()
-export class QuoteService {
+export class UserService {
 
   constructor(private http: AuthHttp) { }
 

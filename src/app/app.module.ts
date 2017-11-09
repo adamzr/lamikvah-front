@@ -11,8 +11,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { HomeModule } from './home/home.module';
+import { ProfileModule } from './profile/profile.module';
 import { AboutModule } from './about/about.module';
-import { LoginModule } from './login/login.module';
+import { CallbackModule } from './auth0-callback/callback.module';
+//import { LoginModule } from './login/login.module';
 
 @NgModule({
   imports: [
@@ -24,8 +26,10 @@ import { LoginModule } from './login/login.module';
     CoreModule,
     SharedModule,
     HomeModule,
+    ProfileModule,
     AboutModule,
-    LoginModule,
+    CallbackModule,
+//    LoginModule,
     AppRoutingModule
   ],
   declarations: [AppComponent],

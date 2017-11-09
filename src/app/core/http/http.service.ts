@@ -44,6 +44,7 @@ export class HttpService extends Http {
       url = request.url;
       request.url = environment.serverUrl + url;
     }
+    log.debug("Making request to: ", url);
 
     if (!options.cache) {
       // Do not use cache

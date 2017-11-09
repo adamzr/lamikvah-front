@@ -12,11 +12,12 @@ import { AuthenticationGuard } from './authentication/authentication.guard';
 import { I18nService } from './i18n.service';
 import { HttpService } from './http/http.service';
 import { HttpCacheService } from './http/http-cache.service';
+import { AuthHttp, AuthConfig } from 'angular2-jwt';
 
-export function createHttpService(backend: ConnectionBackend,
-                                  defaultOptions: RequestOptions,
-                                  httpCacheService: HttpCacheService) {
-  return new HttpService(backend, defaultOptions, httpCacheService);
+export function authHttpServiceFactory(http: Http, options: RequestOptions) {
+  return new AuthHttp(new AuthConfig({
+    tokenGetter: (() => localStorage.getItem('access_token'))
+  }), http, options);
 }
 
 @NgModule({
@@ -36,10 +37,15 @@ export function createHttpService(backend: ConnectionBackend,
     AuthenticationGuard,
     I18nService,
     HttpCacheService,
+    // {
+    //   provide: Http,
+    //   deps: [XHRBackend, RequestOptions, HttpCacheService],
+    //   useFactory: createHttpService
+    // },
     {
-      provide: Http,
-      deps: [XHRBackend, RequestOptions, HttpCacheService],
-      useFactory: createHttpService
+      provide: AuthHttp,
+      useFactory: authHttpServiceFactory,
+      deps: [Http, RequestOptions]
     }
   ]
 })
