@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-
+import { FormsModule }   from '@angular/forms';
 import { CoreModule } from '../core/core.module';
 import { SharedModule } from '../shared/shared.module';
 import { ProfileRoutingModule } from './profile-routing.module';
@@ -13,6 +13,7 @@ import { UserService } from './user.service';
     CommonModule,
     TranslateModule,
     CoreModule,
+    FormsModule,
     SharedModule,
     ProfileRoutingModule
   ],

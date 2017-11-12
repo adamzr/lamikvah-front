@@ -1,18 +1,25 @@
 <div class="container-fluid">
   <h1 translate>Profile</h1>
-  <form>
-  <div class="form-group">
-    <label for="exampleInputEmail1">Email</label>
-    <input type="email" class="form-control" id="email" disabled>
-  </div>
-  <div class="form-group">
-    <label for="firstName">First Name</label>
-    <input type="text" class="form-control" id="firstName" placeholder="Jane">
-  </div>
-  <div class="form-group">
-    <label for="lastName">Last Name</label>
-    <input type="text" class="form-control" id="lastName" placeholder="Doe">
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+  <form (ngSubmit)="onSubmit()" #profileForm="ngForm">
+    <div class="form-group">
+      <label for="email" translate>Email</label>
+      <input type="email" class="form-control" id="email" name="email" disabled>
+    </div>
+    <div class="form-group">
+      <label for="title" translate>Title</label>
+      <input [(ngModel)]="model.title" #title="ngModel" type="text" class="form-control" id="title" name="title" placeholder="Mrs." required>
+      <div [hidden]="title.valid || title.pristine" class="alert alert-danger" translate>Title is required.</div>
+    </div>
+    <div class="form-group">
+      <label for="firstName" translate>First Name</label>
+      <input [(ngModel)]="model.firstName" #firstName="ngModel" type="text" class="form-control" id="firstName" name="firstName" placeholder="Jane" required>
+      <div [hidden]="firstName.valid || firstName.pristine" class="alert alert-danger" translate>First name is required.</div>
+    </div>
+    <div class="form-group">
+      <label for="lastName" translate>Last Name</label>
+      <input [(ngModel)]="model.lastName" #lastName="ngModel" type="text" class="form-control" id="lastName" name="lastName" placeholder="Doe" required>
+      <div [hidden]="lastName.valid || lastName.pristine" class="alert alert-danger" translate>Last name is required.</div>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="!profileForm.form.valid">Submit</button>
+  </form>
 </div>

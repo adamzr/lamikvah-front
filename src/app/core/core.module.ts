@@ -4,7 +4,8 @@ import { RouterModule } from '@angular/router';
 import { HttpModule, Http, XHRBackend, ConnectionBackend, RequestOptions } from '@angular/http';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { JwtModule } from '@auth0/angular-jwt';
+import { HttpClientModule } from '@angular/common/http';
 import { ShellComponent } from './shell/shell.component';
 import { HeaderComponent } from './shell/header/header.component';
 import { AuthenticationService } from './authentication/authentication.service';
@@ -26,7 +27,16 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     HttpModule,
     TranslateModule,
     NgbModule,
-    RouterModule
+    RouterModule,
+    HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return localStorage.getItem('access_token');
+        },
+        whitelistedDomains: ['localhost:8080']
+      }
+    })
   ],
   declarations: [
     HeaderComponent,

@@ -14,7 +14,6 @@ import { HomeModule } from './home/home.module';
 import { ProfileModule } from './profile/profile.module';
 import { AboutModule } from './about/about.module';
 import { CallbackModule } from './auth0-callback/callback.module';
-//import { LoginModule } from './login/login.module';
 
 @NgModule({
   imports: [
