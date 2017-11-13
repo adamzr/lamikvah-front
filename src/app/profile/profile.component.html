@@ -1,5 +1,8 @@
 <div class="container-fluid">
   <h1 translate>Profile</h1>
+  <div [ngClass]="alertClasses" role="alert" *ngIf="showMessage" >
+    {{message}}
+  </div>
   <form (ngSubmit)="onSubmit()" #profileForm="ngForm">
     <div class="form-group">
       <label for="email" translate>Email</label>

@@ -3,6 +3,7 @@ import 'rxjs/add/operator/finally';
 import { Component, OnInit } from '@angular/core';
 
 import { UserService } from './user.service';
+import { User } from './user';
 
 @Component({
   selector: 'app-home',
@@ -11,16 +12,40 @@ import { UserService } from './user.service';
 })
 export class ProfileComponent implements OnInit {
 
-  quote: string;
-  isLoading: boolean;
+  model: User;
+  message: string = "";
+  showMessage: boolean = false;
+  alertClasses =  {
+    'alert': true,
+    'alert-danger': false,
+    'alert-success':  false
+  };
 
   constructor(private userService: UserService) {}
 
   ngOnInit() {
-    this.isLoading = true;
-    // this.quoteService.getRandomQuote({ category: 'dev' })
-    //   .finally(() => { this.isLoading = false; })
-    //   .subscribe((quote: string) => { this.quote = quote; });
+    this.userService.getUser().subscribe(
+      data => {this.model = data},
+      err => {
+        console.error("Failed to get user!", err);
+        this.alertClasses['alert-danger'] = true;
+        this.alertClasses['alert-success'] = false;
+        this.showMessage = true;
+        this.message = "There was a problem getting your profile information. Please try again later."
+      }
+    );
+  }
+
+  onSubmit = () => {
+    this.userService.saveUser(this.model).subscribe(
+      (data) => {
+        this.model = data;
+        this.alertClasses['alert-danger'] = false;
+        this.alertClasses['alert-success'] = true;
+        this.showMessage = true;
+        this.message = "Your profile was saved!"
+      }
+    )
   }
 
 }
