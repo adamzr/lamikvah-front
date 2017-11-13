@@ -36,7 +36,12 @@ export class ProfileComponent implements OnInit {
     );
   }
 
-  onSubmit = () => {
+  onSubmit() {
+
+    this.showMessage = false;
+    this.alertClasses['alert-danger'] = false;
+    this.alertClasses['alert-success'] = false;
+
     this.userService.saveUser(this.model).subscribe(
       (data) => {
         this.model = data;
@@ -44,8 +49,17 @@ export class ProfileComponent implements OnInit {
         this.alertClasses['alert-success'] = true;
         this.showMessage = true;
         this.message = "Your profile was saved!"
+      },
+      err => {
+        console.error("Failed to save user!", err);
+        this.alertClasses['alert-danger'] = true;
+        this.alertClasses['alert-success'] = false;
+        this.showMessage = true;
+        this.message = "There was a problem getting your profile information. Please try again later."
       }
     )
   }
+
+  get diagnostic() { return JSON.stringify(this.model); }
 
 }
