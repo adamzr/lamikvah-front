@@ -11,24 +11,58 @@
           <i class="fa fa-home"></i>
           <span translate>Home</span>
         </a>
-        <a class="nav-item nav-link text-uppercase" routerLink="/about" routerLinkActive="active">
-          <i class="fa fa-question-circle"></i>
-          <span translate>About</span>
+        <a class="nav-item nav-link text-uppercase" routerLink="/appointments" routerLinkActive="active">
+          <i class="fa fa-calendar"></i>
+          <span translate>Appointments</span>
         </a>
-        <a class="nav-item nav-link text-uppercase" routerLink="/profile" routerLinkActive="active">
-          <i class="fa fa-question-circle"></i>
-          <span translate>Profile</span>
+        <a class="nav-item nav-link text-uppercase" routerLink="/fees-and-membership" routerLinkActive="active">
+          <i class="fa fa-credit-card"></i>
+          <span translate>Fees/Membership</span>
         </a>
+        <a class="nav-item nav-link text-uppercase" routerLink="/faqs" routerLinkActive="active">
+          <i class="fa fa-question-circle"></i>
+          <span translate>FAQs</span>
+        </a>
+        <a class="nav-item nav-link text-uppercase" routerLink="/faqs" routerLinkActive="active">
+          <i class="fa fa-location-arrow"></i>
+          <span translate>Directions</span>
+        </a>
+        <a class="nav-item nav-link text-uppercase" routerLink="/faqs" routerLinkActive="active">
+          <i class="fa fa-money"></i>
+          <span translate>Donations</span>
+        </a>
+        <a class="nav-item nav-link text-uppercase" routerLink="/faqs" routerLinkActive="active">
+          <i class="fa fa-male"></i>
+          <span translate>Men's Mikvah</span>
+        </a>
+        <a class="nav-item nav-link text-uppercase" routerLink="/faqs" routerLinkActive="active">
+          <i class="fa fa-phone"></i>
+          <span translate>Contact Us</span>
+        </a>
+        <button class="nav-item nav-link text-uppercase ml-auto" (click)="login()" *ngIf="!loggedIn">
+          <i class="fa fa-user-circle"></i>
+          <span translate>Login/Register</span>
+        </button>
+        <div class="nav-item" ngbDropdown *ngIf="loggedIn" placement="bottom-right">
+        <a class="nav-link" ngbDropdownToggle id="navbarDropdownMenuLink">
+          <i class="fa fa-user-circle"></i> <span>{{userName}}</span>
+        </a>
+        <div ngbDropdownMenu aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" routerLink="/profile" routerLinkActive="active">Profile</a>
+          <div class="dropdown-divider"></div>
+          <button class="dropdown-item" (click)="logout()">Logout</button>
+        </div>
       </div>
-      <div class="navbar-nav ml-auto">
-        <!-- <div class="nav-item" ngbDropdown placement="bottom-right">
+      </div>
+      <!-- <div class="navbar-nav ml-auto">
+        <div class="nav-item" ngbDropdown placement="bottom-right">
           <a id="language-dropdown" class="nav-link" ngbDropdownToggle>{{currentLanguage}}</a>
           <div ngbDropdownMenu aria-labelledby="language-dropdown">
             <button class="dropdown-item" *ngFor="let language of languages" (click)="setLanguage(language)">
               {{language}}
             </button>
           </div>
-        </div> -->
+        </div>
         <div class="nav-item" ngbDropdown placement="bottom-right">
           <a id="user-dropdown" class="nav-link" ngbDropdownToggle>
             <i class="fa fa-user-circle"></i>
@@ -40,7 +74,7 @@
             <button class="dropdown-item" (click)="logout()" translate>Logout</button>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </nav>
 </header>

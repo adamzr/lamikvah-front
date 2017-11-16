@@ -14,6 +14,7 @@ import { I18nService } from './i18n.service';
 import { HttpService } from './http/http.service';
 import { HttpCacheService } from './http/http-cache.service';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
+import { UserService } from '../profile/user.service';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({
@@ -44,6 +45,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   ],
   providers: [
     AuthenticationService,
+    UserService,
     AuthenticationGuard,
     I18nService,
     HttpCacheService,

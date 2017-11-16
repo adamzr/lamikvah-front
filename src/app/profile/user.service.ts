@@ -21,4 +21,20 @@ export class UserService {
     return this.http.get<User>(userPath);
   }
 
+  getUserName(): Observable<string> {
+    if(!localStorage.userName){
+      return this.getUser().map(user => {
+        if(user.firstName || user.lastName){
+          var userName = (user.title + " " + user.firstName + " " + user.lastName).trim();
+          localStorage.userName = userName;
+          return userName;
+        } else {
+          return "Mikvah User";
+        }
+      });
+    } else {
+      return Observable.of(localStorage.userName);
+    }
+  }
+
 }
