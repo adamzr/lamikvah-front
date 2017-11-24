@@ -12,8 +12,13 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { HomeModule } from './home/home.module';
 import { ProfileModule } from './profile/profile.module';
-import { AboutModule } from './about/about.module';
+import { AppointmentsModule } from './appointments/appointments.module';
+import { MembershipModule } from './membership/membership.module';
+import { FaqModule } from './faq/faq.module';
 import { CallbackModule } from './auth0-callback/callback.module';
+import { DirectionsModule } from './directions/directions.module';
+import { DonationsModule } from './donations/donations.module';
+import { MensModule } from './mens/mens.module';
 
 @NgModule({
   imports: [
@@ -26,9 +31,13 @@ import { CallbackModule } from './auth0-callback/callback.module';
     SharedModule,
     HomeModule,
     ProfileModule,
-    AboutModule,
+    MembershipModule,
+    AppointmentsModule,
+    FaqModule,
+    DirectionsModule,
+    DonationsModule,
+    MensModule,
     CallbackModule,
-//    LoginModule,
     AppRoutingModule
   ],
   declarations: [AppComponent],

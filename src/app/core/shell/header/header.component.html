@@ -1,6 +1,6 @@
 <header>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="https://github.com/ngx-rocket" translate>APP_NAME</a>
+    <a class="navbar-brand" href="/" translate>APP_NAME</a>
     <button class="navbar-toggler" type="button" aria-controls="navbar-menu"
             aria-label="Toggle navigation" (click)="toggleMenu()" [attr.aria-expanded]="!menuHidden">
       <span class="navbar-toggler-icon"></span>
@@ -23,26 +23,22 @@
           <i class="fa fa-question-circle"></i>
           <span translate>FAQs</span>
         </a>
-        <a class="nav-item nav-link text-uppercase" routerLink="/faqs" routerLinkActive="active">
+        <a class="nav-item nav-link text-uppercase" routerLink="/directions" routerLinkActive="active">
           <i class="fa fa-location-arrow"></i>
           <span translate>Directions</span>
         </a>
-        <a class="nav-item nav-link text-uppercase" routerLink="/faqs" routerLinkActive="active">
+        <a class="nav-item nav-link text-uppercase" routerLink="/donations" routerLinkActive="active">
           <i class="fa fa-money"></i>
           <span translate>Donations</span>
         </a>
-        <a class="nav-item nav-link text-uppercase" routerLink="/faqs" routerLinkActive="active">
+        <a class="nav-item nav-link text-uppercase" routerLink="/mens-mikvah" routerLinkActive="active">
           <i class="fa fa-male"></i>
           <span translate>Men's Mikvah</span>
         </a>
-        <a class="nav-item nav-link text-uppercase" routerLink="/faqs" routerLinkActive="active">
-          <i class="fa fa-phone"></i>
-          <span translate>Contact Us</span>
-        </a>
-        <button class="nav-item nav-link text-uppercase ml-auto" (click)="login()" *ngIf="!loggedIn">
+        <a class="nav-item nav-link text-uppercase ml-auto" (click)="login()" *ngIf="!loggedIn">
           <i class="fa fa-user-circle"></i>
           <span translate>Login/Register</span>
-        </button>
+        </a>
         <div class="nav-item" ngbDropdown *ngIf="loggedIn" placement="bottom-right">
         <a class="nav-link" ngbDropdownToggle id="navbarDropdownMenuLink">
           <i class="fa fa-user-circle"></i> <span>{{userName}}</span>
@@ -50,7 +46,7 @@
         <div ngbDropdownMenu aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" routerLink="/profile" routerLinkActive="active">Profile</a>
           <div class="dropdown-divider"></div>
-          <button class="dropdown-item" (click)="logout()">Logout</button>
+          <a class="dropdown-item" (click)="logout()">Logout</a>
         </div>
       </div>
       </div>

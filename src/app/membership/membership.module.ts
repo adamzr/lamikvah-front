@@ -2,17 +2,17 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { AboutRoutingModule } from './about-routing.module';
-import { AboutComponent } from './about.component';
+import { MembershipRoutingModule } from './membership-routing.module';
+import { MembershipComponent } from './membership.component';
 
 @NgModule({
   imports: [
     CommonModule,
     TranslateModule,
-    AboutRoutingModule
+    MembershipRoutingModule
   ],
   declarations: [
-    AboutComponent
+    MembershipComponent
   ]
 })
-export class AboutModule { }
+export class MembershipModule { }
