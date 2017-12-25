@@ -3,3 +3,46 @@
 <img src="assets/appointments.jpg" width="100%"/>
 
 <h1>Appointments</h1>
+
+<div class="card" *ngIf="hasCurrentAppointment">
+    <div class="card-body">
+      <h4 class="card-title">Current Appointment</h4>
+      <p class="card-text">Tuesday, January 2nd, 2017 at 7:15 pm</p>
+      <a href="#" class="btn btn-danger">Cancel</a>
+    </div>
+</div>
+
+<div class="card" *ngIf="hasAvailabilityData">
+    <div class="card-body">
+      <h4 class="card-title">Create Appointment</h4>
+      <form (ngSubmit)="onSubmit()" #createAppointmentForm="ngForm">
+        <div class="form-group">
+          <label for="date">Date</label>
+          <select class="form-control" id="date" name="date" [(ngModel)]="model.date" #dateField="ngModel">
+            <option *ngFor="let day of availableDays" [value]="day.isoDay">{{day.displayDay}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+            <label for="time">Time</label>
+            <select class="form-control" id="time" name="time" [(ngModel)]="model.time" #timeField="ngModel">
+              <option>7:00 pm</option>
+              <option>7:15 pm</option>
+              <option>7:30 pm</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <!-- Used to display form errors -->
+            <label for="card-element">Credit Card</label>
+            <div id="card-element" class="form-control">
+                <!-- a Stripe Element will be inserted here. -->
+            </div>
+            <div id="card-errors" class="card-errors" role="alert"></div>
+          </div>
+      
+          <button type="submit" class="btn btn-primary">Reserve</button>
+      </form>
+    </div>
+</div>
+
+</div>
