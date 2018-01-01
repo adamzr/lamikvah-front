@@ -35,20 +35,22 @@
           <i class="fa fa-male"></i>
           <span translate>Men's Mikvah</span>
         </a>
-        <a class="nav-item nav-link text-uppercase ml-auto" (click)="login()" *ngIf="!loggedIn">
+
+        <a class="nav-item nav-link text-uppercase ml-auto pointer" (click)="login()" *ngIf="!loggedIn">
           <i class="fa fa-user-circle"></i>
           <span translate>Login/Register</span>
         </a>
-        <div class="nav-item" ngbDropdown *ngIf="loggedIn" placement="bottom-right">
-        <a class="nav-link" ngbDropdownToggle id="navbarDropdownMenuLink">
-          <i class="fa fa-user-circle"></i> <span>{{userName}}</span>
-        </a>
-        <div ngbDropdownMenu aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" routerLink="/profile" routerLinkActive="active">Profile</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" (click)="logout()">Logout</a>
+
+        <div class="nav-item justify-content-end" ngbDropdown *ngIf="loggedIn" placement="bottom-right">
+          <a class="nav-link" ngbDropdownToggle id="navbarDropdownMenuLink">
+            <i class="fa fa-user-circle"></i> <span>{{userName}}</span>
+          </a>
+          <div ngbDropdownMenu aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" routerLink="/profile" routerLinkActive="active">Profile</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item pointer" (click)="logout()">Logout</a>
+          </div>
         </div>
-      </div>
       </div>
       <!-- <div class="navbar-nav ml-auto">
         <div class="nav-item" ngbDropdown placement="bottom-right">
