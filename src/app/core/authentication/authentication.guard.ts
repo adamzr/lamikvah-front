@@ -14,24 +14,22 @@ export class AuthenticationGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     log.debug("Going to ", state);
 
-    if(state.url === "/about"){
-      if (this.authenticationService.isAuthenticated()) {
+    if (this.authenticationService.isAuthenticated()) {
+      if(state.url === "/profile"){
         return true;
       }
-
-      log.debug('Not authenticated, redirecting...');
-      this.authenticationService.login();
-      return false;
+      let hasProfile = localStorage.getItem("hasProfile");
+      if(hasProfile === "true"){
+        return true;
+      } else {
+        console.log("User does not have a valid profile, redirecting them to the profile page from " + state.url);
+        this.router.navigate(['/profile'], { replaceUrl: true });
+        return false;
+      }
     }
+
     return true;
-    // if (this.authenticationService.isAuthenticated()) {
-    //   return true;
-    // }
-    //
-    // log.debug('Not authenticated, redirecting...');
-    // this.authenticationService.login();
-    // //this.router.navigate(['/login'], { replaceUrl: true });
-    // return false;
+
   }
 
 }

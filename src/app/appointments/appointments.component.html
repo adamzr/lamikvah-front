@@ -10,7 +10,7 @@
 </p>
 
 <p *ngIf="!isLoggedIn">
-  You must <a (click)="login()" class="link">log in</a> to make an appointment.
+  You must <a (click)="logIn()" class="link" href="javascript:void(0);" >log in</a> to make an appointment.
 </p>
 
 <div class="card" *ngIf="isLoggedIn && hasCurrentAppointment">

@@ -116,6 +116,10 @@ export class AppointmentsComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     );
     this.isLoggedIn = this.authService.isAuthenticated();
+    this.populateUserInfo();
+  }
+
+  populateUserInfo(){
     this.userService.getUser().subscribe(
       user => {
         this.user = user;
@@ -157,6 +161,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit, OnDestroy {
     } else {
       this.saveAppointment();
     }
+    this.populateUserInfo();
     
   }
 

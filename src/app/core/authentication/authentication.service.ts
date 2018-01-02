@@ -5,6 +5,7 @@ import * as auth0 from 'auth0-js';
 
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/filter';
+import { UserService } from '../../profile/user.service';
 
 export interface Credentials {
   // Customize received credentials here
@@ -38,7 +39,7 @@ export class AuthenticationService {
     scope: 'openid profile create:appointments'
   });
 
-  constructor(public router: Router) {
+  constructor(public router: Router, public userService: UserService) {
     this._credentials = JSON.parse(sessionStorage.getItem(credentialsKey) || localStorage.getItem(credentialsKey));
   }
 
@@ -47,100 +48,50 @@ export class AuthenticationService {
   }
 
   public handleAuthentication(): void {
-  this.auth0.parseHash((err, authResult) => {
-    if (authResult && authResult.accessToken && authResult.idToken) {
-      window.location.hash = '';
-      this.setSession(authResult);
-      this.router.navigate(['/home']);
-    } else if (err) {
-      this.router.navigate(['/home']);
-      console.log(err);
-    }
-  });
-}
+    this.auth0.parseHash((err, authResult) => {
+      if (authResult && authResult.accessToken && authResult.idToken) {
+        window.location.hash = '';
+        this.setSession(authResult);
+        this.userService.getUser().subscribe(user => {
+          if(user.firstName || user.lastName){
+            localStorage.setItem("hasProfile", "true");
+            this.router.navigate(['/appointments']);
+          } else {
+            localStorage.setItem("hasProfile", "false");
+            this.router.navigate(['/profile']);
+          }
+        })
+        
+      } else if (err) {
+        this.router.navigate(['/home']);
+        console.log(err);
+      }
+    });
+  }
 
-private setSession(authResult: any): void {
-  // Set the time that the access token will expire at
-  const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
-  localStorage.setItem('access_token', authResult.accessToken);
-  localStorage.setItem('id_token', authResult.idToken);
-  localStorage.setItem('expires_at', expiresAt);
-}
+  private setSession(authResult: any): void {
+    // Set the time that the access token will expire at
+    const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
+    localStorage.setItem('access_token', authResult.accessToken);
+    localStorage.setItem('id_token', authResult.idToken);
+    localStorage.setItem('expires_at', expiresAt);
+  }
 
-public logout(): void {
-  // Remove tokens and expiry time from localStorage
-  localStorage.removeItem('access_token');
-  localStorage.removeItem('id_token');
-  localStorage.removeItem('expires_at');
-  // Go back to the home route
-  this.router.navigate(['/']);
-}
+  public logout(): void {
+    // Remove tokens and expiry time from localStorage
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('id_token');
+    localStorage.removeItem('expires_at');
+    localStorage.clear();
+    // Go back to the home route
+    this.router.navigate(['/']);
+  }
 
-public isAuthenticated(): boolean {
-  // Check whether the current time is past the
-  // access token's expiry time
-  const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
-  return new Date().getTime() < expiresAt;
-}
-
-  // /**
-  //  * Authenticates the user.
-  //  * @param {LoginContext} context The login parameters.
-  //  * @return {Observable<Credentials>} The user credentials.
-  //  */
-  // login(context: LoginContext): Observable<Credentials> {
-  //   // Replace by proper authentication call
-  //   const data = {
-  //     username: context.username,
-  //     token: '123456'
-  //   };
-  //   this.setCredentials(data, context.remember);
-  //   return Observable.of(data);
-  // }
-  //
-  // /**
-  //  * Logs out the user and clear credentials.
-  //  * @return {Observable<boolean>} True if the user was logged out successfully.
-  //  */
-  // logout(): Observable<boolean> {
-  //   // Customize credentials invalidation here
-  //   this.setCredentials();
-  //   return Observable.of(true);
-  // }
-  //
-  // /**
-  //  * Checks is the user is authenticated.
-  //  * @return {boolean} True if the user is authenticated.
-  //  */
-  // isAuthenticated(): boolean {
-  //   return !!this.credentials;
-  // }
-  //
-  // /**
-  //  * Gets the user credentials.
-  //  * @return {Credentials} The user credentials or null if the user is not authenticated.
-  //  */
-  // get credentials(): Credentials {
-  //   return this._credentials;
-  // }
-  //
-  // /**
-  //  * Sets the user credentials.
-  //  * The credentials may be persisted across sessions by setting the `remember` parameter to true.
-  //  * Otherwise, the credentials are only persisted for the current session.
-  //  * @param {Credentials=} credentials The user credentials.
-  //  * @param {boolean=} remember True to remember credentials across sessions.
-  //  */
-  // private setCredentials(credentials?: Credentials, remember?: boolean) {
-  //   this._credentials = credentials || null;
-  //
-  //   if (credentials) {
-  //     const storage = remember ? localStorage : sessionStorage;
-  //     storage.setItem(credentialsKey, JSON.stringify(credentials));
-  //   } else {
-  //     sessionStorage.removeItem(credentialsKey);
-  //     localStorage.removeItem(credentialsKey);
-  //   }
-  // }
+  public isAuthenticated(): boolean {
+    // Check whether the current time is past the
+    // access token's expiry time
+    const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
+    return new Date().getTime() < expiresAt;
+  }
 
 }

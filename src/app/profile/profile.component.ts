@@ -48,7 +48,8 @@ export class ProfileComponent implements OnInit {
         this.alertClasses['alert-danger'] = false;
         this.alertClasses['alert-success'] = true;
         this.showMessage = true;
-        this.message = "Your profile was saved!"
+        this.message = "Your profile was saved!";
+        localStorage.setItem("hasProfile", "true");
       },
       err => {
         console.error("Failed to save user!", err);
