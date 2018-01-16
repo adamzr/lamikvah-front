@@ -49,11 +49,6 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     AuthenticationGuard,
     I18nService,
     HttpCacheService,
-    // {
-    //   provide: Http,
-    //   deps: [XHRBackend, RequestOptions, HttpCacheService],
-    //   useFactory: createHttpService
-    // },
     {
       provide: AuthHttp,
       useFactory: authHttpServiceFactory,

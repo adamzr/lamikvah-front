@@ -44,3 +44,68 @@ There is no individual use fee for Mikvah members.
 </p>
 </li>
 </ul>
+
+<p *ngIf="!isLoggedIn">
+    You must <a (click)="logIn()" class="link" href="javascript:void(0);" >log in or create an account</a> to become a member.
+  </p>
+  
+  <div [ngClass]="alertClasses" role="alert" *ngIf="showMessage" >
+    {{message}}
+  </div>
+  
+  <div class="card membership-card" *ngIf="isLoggedIn && isMember">
+      <div class="card-body">
+        <h4 class="card-title">Membership</h4>
+        <p class="card-text">You are currently a member at the {{ currentLevel }} level.</p>
+        <p class="card-text">Your membership will automatically renew on {{ expirationDate }}.</p>
+        <p class="card-text">Renewals will be charged on your {{ savedCreditCard }}.</p>
+        <p class="card-text">To switch to a different card, please enter the new card information below.</p>
+        <div id="update-card-element" class="form-control" #updateCardInfo>
+            <!-- a Stripe Element will be inserted here. -->
+        </div>
+        <div id="update-card-errors" class="card-errors" role="alert" *ngIf="updateCardError">{{ updateCardError }}</div>
+        <input class="btn btn-danger" (click)="updateMembershipCard()" type="button" value="Update Card">
+      </div>
+  </div>
+  
+  <div class="card membership-card" *ngIf="isLoggedIn && !isMember">
+      <div class="card-body">
+        <h4 class="card-title">Membership</h4>
+        <form (ngSubmit)="onCreateSubmit(createAppointmentForm)" #createAppointmentForm="ngForm">
+          <div class="form-group">
+            <label for="level">Level</label>
+            <select class="form-control" id="level" name="level" [(ngModel)]="model.plan" #levelField="ngModel" required>
+              <option value="standard-1">Standard - $360</option>
+              <option value="silver-1">Silver - $500</option>
+              <option value="gold-1">Gold - $1000</option>
+              <option value="platinum-1">Platinum - $1800</option>
+            </select>
+          </div>
+  
+            <div class="form-group" *ngIf="!isMember">
+              <!-- Used to display form errors -->
+              <label for="card-element">Payment Method</label>
+              <div class="form-check" *ngIf="hasSavedCreditCard">
+                  <input class="form-check-input payment-radio" type="radio" name="paymentMethod" id="paymentMethod1" value="saved" [(ngModel)]="model.paymentMethod" checked>
+                  <label class="form-check-label mikvah-checkbox-label" for="paymentMethod">
+                    {{ savedCreditCard }}
+                  </label>
+              </div>
+              <div class="form-check" *ngIf="hasSavedCreditCard">
+                  <input class="form-check-input payment-radio" type="radio" name="paymentMethod" id="paymentMethod2" value="new" [(ngModel)]="model.paymentMethod">
+                  <label class="form-check-label mikvah-checkbox-label" for="paymentMethod">
+                    Use a different card
+                  </label>
+              </div>
+              <div id="create-card-element" class="form-control" #createCardInfo>
+                  <!-- a Stripe Element will be inserted here. -->
+              </div>
+              <div id="create-card-errors" class="card-errors" role="alert" *ngIf="createCardError">{{ createCardError }}</div>
+            </div>
+            <button type="submit" class="btn btn-primary">Join</button>
+        </form>
+      </div>
+  </div>
+
+
+</div>

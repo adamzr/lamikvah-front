@@ -23,30 +23,54 @@
 		become a Friend of the Mikvah for the year.
 	</li>
 	<li>
-		<strong>SHABBAT GIFT CARDS- $100.00</strong><br />
-		Consider sending a Mikvah Shabbat card in lieu of flowers, candy or a gift. Let
-		your host know you thought of a more meaningful way to enhance their Shabbat.
-		For $100.00 you will receive a package of 10 cards to give to friends and family.
-	</li>
-	<li>
 		<strong>YAHRZEIT AND MEMORIAL CONTRIBUTIONS- $54.00 (and up)</strong><br />
 		Each member of the Jewish community is a link in the chain of our history.
 		Consider a yahrzeit or memorial contribution connected to a mitzvah which
 		strengthens this same chain.
-	</li>
-	<li>
-		<strong>TRIBUTE CARDS- $36.00 (and Up)</strong><br />
-		Looking for a way to acknowledge someone who has helped you or your family? Let
-		them know you have contributed to their Mikvah as a way of saying thank you.
-	</li>
-	<li>
-		<strong>PURIM CARDS- $25.00</strong><br />
-		Make a donation to the Mikvah in honor of your family and friends for Purim.
-		For $25.00 you receive a package of ten cards that you can send to your Mishloach
-		Manot list to let them know that you have contributed to the Mikvah in their honor.
 	</li>
 </ul>
 <div>
 	For donations in excess of $360.00, which would entitle you to an annual Mikvah membership and its benefits,
 	please click on the <a routerLink="fees-and-membership">Fees/Membership</a> tab.
 </div>
+<div class="card donation-card">
+		<div class="card-body">
+		  <h4 class="card-title">Make A Donation</h4>
+		  <div [ngClass]="alertClasses" role="alert" *ngIf="showMessage" >
+				{{message}}
+		 </div>
+		  <form (ngSubmit)="onSubmit(donationForm)" #donationForm="ngForm">
+			<div class="form-group">
+			  <label for="amount">Amount</label>
+			  <input class="form-control" id="amount" name="amount" [(ngModel)]="model.amount" #amountField="ngModel" type="number" step="0.01" min="1" list="defaultNumbers" required />
+			  <datalist id="defaultNumbers">
+					<option value="360.00">Sponsor A Bride</option>
+					<option value="180.00">Friend Of The Mikvah</option>
+					<option value="54.00">Yartzeit and Memorial Contribution</option>
+				  </datalist>
+			</div>
+	
+			  <div class="form-group">
+				<!-- Used to display form errors -->
+				<label for="card-element">Payment Method</label>
+				<div class="form-check" *ngIf="hasSavedCreditCard">
+					<input class="form-check-input payment-radio" type="radio" name="paymentMethod" id="paymentMethod1" value="saved" [(ngModel)]="model.paymentMethod" checked>
+					<label class="form-check-label mikvah-checkbox-label" for="paymentMethod">
+					  {{ savedCreditCard }}
+					</label>
+				</div>
+				<div class="form-check" *ngIf="hasSavedCreditCard">
+					<input class="form-check-input payment-radio" type="radio" name="paymentMethod" id="paymentMethod2" value="new" [(ngModel)]="model.paymentMethod">
+					<label class="form-check-label mikvah-checkbox-label" for="paymentMethod">
+					  Use a different card
+					</label>
+				</div>
+				<div id="card-element" class="form-control" #cardInfo>
+					<!-- a Stripe Element will be inserted here. -->
+				</div>
+				<div id="card-errors" class="card-errors" role="alert" *ngIf="error">{{ error }}</div>
+			  </div>
+			  <button type="submit" class="btn btn-primary">Donate</button>
+		  </form>
+		</div>
+	</div>

@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/timer';
+import 'rxjs/add/observable/of';
 
 import * as auth0 from 'auth0-js';
 
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/filter';
 import { UserService } from '../../profile/user.service';
+import { Subscription } from 'rxjs/Subscription';
 
 export interface Credentials {
   // Customize received credentials here
@@ -29,6 +32,8 @@ const credentialsKey = 'credentials';
 export class AuthenticationService {
 
   private _credentials: Credentials;
+
+  private refreshSubscription: Subscription;
 
   auth0 = new auth0.WebAuth({
     clientID: 'a5SWVJAk9yYGKbnXqBJBQY7osDwOpfhB',
@@ -75,6 +80,7 @@ export class AuthenticationService {
     localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('expires_at', expiresAt);
+    this.scheduleRenewal();
   }
 
   public logout(): void {
@@ -92,6 +98,46 @@ export class AuthenticationService {
     // access token's expiry time
     const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
     return new Date().getTime() < expiresAt;
+  }
+
+  public renewToken() {
+    this.auth0.checkSession({}, (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        this.setSession(result);
+      }
+    });
+  }
+
+  public scheduleRenewal() {
+    if(!this.isAuthenticated()) return;
+    this.unscheduleRenewal();
+  
+    const expiresAt = JSON.parse(window.localStorage.getItem('expires_at'));
+  
+    const source = Observable.of(expiresAt).flatMap(
+      expiresAt => {
+  
+        const now = Date.now();
+  
+        // Use the delay in a timer to
+        // run the refresh at the proper time
+        return Observable.timer(Math.max(1, expiresAt - now));
+      });
+  
+    // Once the delay time from above is
+    // reached, get a new JWT and schedule
+    // additional refreshes
+    this.refreshSubscription = source.subscribe(() => {
+      this.renewToken();
+      this.scheduleRenewal();
+    });
+  }
+  
+  public unscheduleRenewal() {
+    if(!this.refreshSubscription) return;
+    this.refreshSubscription.unsubscribe();
   }
 
 }

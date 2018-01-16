@@ -1,5 +1,7 @@
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/of';
+
 import * as moment from 'moment';
 
 import { Injectable } from '@angular/core';
@@ -10,10 +12,10 @@ import { AvailableTime } from './available-time';
 import { HttpClient } from '@angular/common/http';
 import { AppointmentCreationResponse } from './appointment-creation-response';
 
-const appointmentsAvailabilityPath = 'http://localhost:8080/appointments/availability';
-const appointmentCreationPath = 'http://localhost:8080/appointments';
-const appointmentCancellationPath = 'http://localhost:8080/appointments/';
-const saveCreditCardPath = 'http://localhost:8080/credit-card';
+const appointmentsAvailabilityPath = '/api/appointments/availability';
+const appointmentCreationPath = '/api/appointments';
+const appointmentCancellationPath = '/api/appointments/';
+const saveCreditCardPath = '/api/credit-card';
 
 
 @Injectable()

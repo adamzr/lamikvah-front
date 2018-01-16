@@ -10,7 +10,13 @@
       "assets": [
         "assets",
         "favicon.ico",
-        "robots.txt"
+        "robots.txt",
+        "manifest.json",
+        "apple-touch-icon.png",
+        "safari-pinned-tab.svg",
+        "favicon-32x32.png",
+        "favicon-16x16.png",
+        "browserconfig.xml"
       ],
       "index": "index.html",
       "main": "main.ts",
@@ -19,10 +25,14 @@
       "tsconfig": "tsconfig.app.json",
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
+      "serviceWorker": true,
       "styles": [
-        "main.scss"
+        "main.scss",
+        "../node_modules/font-awesome/css/font-awesome.css"
       ],
-      "scripts": ["../node_modules/auth0-js/build/auth0.js"],
+      "scripts": [
+        "../node_modules/auth0-js/build/auth0.js"
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
@@ -53,6 +63,7 @@
   },
   "defaults": {
     "styleExt": "scss",
-    "component": {}
+    "component": {
+    }
   }
 }

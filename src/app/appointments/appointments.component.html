@@ -4,14 +4,34 @@
 
 <h1>Appointments</h1>
 
+<p>Appointments can be made online for any night with the exception of Fridays and Yom Tov.</p>
 <p>
-  Appointments can be made online for any night with the excpetion of Fridays and Yom Tov. There is a $30 fee for an appointment.
-  The fee is waived for mikvah members. 
+  Making an appointment online costs $30, which consists of the $26 mikvah visit fee, plus a $4 convenience fee.
+  These fees are waived entirely for mikvah members. To learn more about membership, please see the <a routerLink="/fees-and-membership">membership page</a>.
+</p>
+<p>
+  Appointments can be made up to one hour before the mikvah opens that day.
+</p>
+<p>
+  You cannot make appointments for rooms with baths at this time.
+</p>
+<p>
+  Appointments can be cancelled anytime before your appointment for a refund.
+</p>
+<p>
+  Please show up on time. If you are not at the mikvah at the time of the appointment, you will lose your appointment, and any fees charged will not be refunded.
+</p>
+<p>
+  All appointments are for 50 minutes. Please be sure to leave on time.
 </p>
 
 <p *ngIf="!isLoggedIn">
   You must <a (click)="logIn()" class="link" href="javascript:void(0);" >log in</a> to make an appointment.
 </p>
+
+<div [ngClass]="alertClasses" role="alert" *ngIf="showMessage" >
+  {{message}}
+</div>
 
 <div class="card" *ngIf="isLoggedIn && hasCurrentAppointment">
     <div class="card-body">
@@ -42,13 +62,13 @@
             <!-- Used to display form errors -->
             <label for="card-element">Payment Method</label>
             <div class="form-check" *ngIf="hasSavedCreditCard">
-                <input class="form-check-input form-control" type="radio" name="paymentMethod" id="paymentMethod1" value="saved" [(ngModel)]="model.paymentMethod" checked>
+                <input class="form-check-input payment-radio" type="radio" name="paymentMethod" id="paymentMethod1" value="saved" [(ngModel)]="model.paymentMethod" checked>
                 <label class="form-check-label mikvah-checkbox-label" for="paymentMethod">
                   {{ savedCreditCard }}
                 </label>
             </div>
             <div class="form-check" *ngIf="hasSavedCreditCard">
-                <input class="form-check-input form-control" type="radio" name="paymentMethod" id="paymentMethod2" value="new" [(ngModel)]="model.paymentMethod">
+                <input class="form-check-input payment-radio" type="radio" name="paymentMethod" id="paymentMethod2" value="new" [(ngModel)]="model.paymentMethod">
                 <label class="form-check-label mikvah-checkbox-label" for="paymentMethod">
                   Use a different card
                 </label>
@@ -58,7 +78,11 @@
             </div>
             <div id="card-errors" class="card-errors" role="alert" *ngIf="error">{{ error }}</div>
           </div>
-      
+          <div class="form-group">
+            <label for="notes" translate>Notes</label>
+            <textarea [(ngModel)]="model.notes" #notes="ngModel" type="text" class="form-control" id="notes" name="notes"></textarea>
+            <small id="notesHelp" class="form-text text-muted">These notes will be shared with the mikvah attendant.</small>
+          </div>
           <button type="submit" class="btn btn-primary">Reserve</button>
       </form>
     </div>

@@ -28,8 +28,13 @@ import { lang } from 'moment';
 })
 export class AppointmentsComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  version: string = environment.version;
-
+  alertClasses =  {
+    'alert': true,
+    'alert-danger': false,
+    'alert-success':  false
+  };
+  showMessage: boolean = false;
+  message: string;
   hasCurrentAppointment: boolean = false;
   hasAvailabilityData: boolean = false;
   hasSavedCreditCard: boolean = false;
@@ -38,7 +43,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit, OnDestroy {
   availableDays: Array<AvailableDay>;
   availableTimes: Array<AvailableTime>;
   availabilityMap: Map<string, Array<AvailableTime>>;
-  model: AppointmentTime = new AppointmentTime("","", "saved");
+  model: AppointmentTime = new AppointmentTime("","", "saved", "");
   card: any;
   cardHandler = this.onCardChange.bind(this);
   stripe: any;
@@ -130,11 +135,24 @@ export class AppointmentsComponent implements OnInit, AfterViewInit, OnDestroy {
         if(user.defaultCard){
           this.hasSavedCreditCard = true;
           this.savedCreditCard = user.defaultCard.brand + " ending in " + user.defaultCard.last4;
+        } else {
+          this.model.paymentMethod = "new";
         }
 
-        this.isMember = user.member
+        this.isMember = user.member;
 
-      } 
+        if(user.notes){
+          this.model.notes = user.notes;
+        }
+
+      },
+      error => {
+        console.error("Failed to get user!", error);
+        this.alertClasses['alert-danger'] = true;
+        this.alertClasses['alert-success'] = false;
+        this.showMessage = true;
+        this.message = "There was a problem getting your profile information. Please try again later.";
+      }
     );
   }
 
@@ -145,17 +163,34 @@ export class AppointmentsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.hasCurrentAppointment = true;
   }
 
-  async onSubmit(form: NgForm) {
+  clearMessages(){
+    this.alertClasses['alert-danger'] = false;
+    this.alertClasses['alert-success'] = false;
+    this.showMessage = false;
+    this.message = "";
+  }
 
+  async onSubmit(form: NgForm) {
+    this.clearMessages();
     if(this.model.paymentMethod === "new"){
       const { token, error } = await this.stripe.createToken(this.card);
       if (error) {
         console.log('Something is wrong:', error);
+        this.alertClasses['alert-danger'] = true;
+        this.alertClasses['alert-success'] = false;
+        this.showMessage = true;
+        this.message = "There was a problem processing your credit card. Please try again later.";
       } else {
         console.log('Success!', token);
         this.appointmentsService.saveCreditCard(token.id).subscribe(message => {
           console.log("Saved card", message)
           this.saveAppointment();
+        }, error => {
+          console.log("Error saving card", error);
+          this.alertClasses['alert-danger'] = true;
+          this.alertClasses['alert-success'] = false;
+          this.showMessage = true;
+          this.message = "There was a problem processing your credit card. Please try again later.";
         });
       }
     } else {
@@ -172,9 +207,22 @@ export class AppointmentsComponent implements OnInit, AfterViewInit, OnDestroy {
       console.log("Got response for making appointment.", response);
       if(response.slot){
         this.processCurrentAppointment(response.slot);
+        this.alertClasses['alert-danger'] = false;
+        this.alertClasses['alert-success'] = true;
+        this.showMessage = true;
+        this.message = "Your appointment was made for " + this.currentAppointment + ". Thank you!";
       } else {
-        alert(response.message);
+        this.alertClasses['alert-danger'] = true;
+        this.alertClasses['alert-success'] = false;
+        this.showMessage = true;
+        this.message = response.message;
       }
+    }, error => {
+      console.error("Error making appointment.", error)
+      this.alertClasses['alert-danger'] = true;
+      this.alertClasses['alert-success'] = false;
+      this.showMessage = true;
+      this.message = "There was a problem making your appointment. Please try again later.";
     });
   }
 
@@ -184,11 +232,23 @@ export class AppointmentsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   cancelAppointment(){
+    this.clearMessages();
     this.appointmentsService.cancelAppointment(this.currentAppointmentId).subscribe(message => {
       this.stripeInitialized = false;
       this.hasCurrentAppointment = false;
       this.currentAppointment = "";
       this.currentAppointmentId = 0;
+
+      this.alertClasses['alert-danger'] = false;
+      this.alertClasses['alert-success'] = true;
+      this.showMessage = true;
+      this.message = message;
+    }, error => {
+      console.error("Error canceling appointment.", error)
+      this.alertClasses['alert-danger'] = true;
+      this.alertClasses['alert-success'] = false;
+      this.showMessage = true;
+      this.message = "There was a problem canceling your appointment. Please try again later.";
     });
   }
 

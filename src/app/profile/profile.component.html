@@ -1,5 +1,6 @@
 <div class="container">
   <h1 translate>Profile</h1>
+  <p *ngIf="hasNoProfile">Please submit your profile information below. This is required before you can make appointments.</p>
   <div [ngClass]="alertClasses" role="alert" *ngIf="showMessage" >
     {{message}}
   </div>
@@ -10,18 +11,68 @@
     </div>
     <div class="form-group">
       <label for="title" translate>Title</label>
-      <input [(ngModel)]="model.title" #titleField="ngModel" type="text" class="form-control" id="title" name="title" placeholder="Mrs." required>
+      <input [(ngModel)]="model.title" #titleField="ngModel" 
+      type="text" class="form-control" id="title" name="title" placeholder="Mrs." autocomplete="honorific-prefix" required>
       <div [hidden]="titleField.valid || titleField.pristine" class="alert alert-danger" translate>Title is required.</div>
     </div>
     <div class="form-group">
       <label for="firstName" translate>First Name</label>
-      <input [(ngModel)]="model.firstName" #firstName="ngModel" type="text" class="form-control" id="firstName" name="firstName" placeholder="Jane" required>
+      <input [(ngModel)]="model.firstName" #firstName="ngModel" 
+      type="text" class="form-control" id="firstName" name="firstName" placeholder="Jane" autocomplete="given-name" required>
       <div [hidden]="firstName.valid || firstName.pristine" class="alert alert-danger" translate>First name is required.</div>
     </div>
     <div class="form-group">
       <label for="lastName" translate>Last Name</label>
-      <input [(ngModel)]="model.lastName" #lastName="ngModel" type="text" class="form-control" id="lastName" name="lastName" placeholder="Doe" required>
+      <input [(ngModel)]="model.lastName" #lastName="ngModel" 
+      type="text" class="form-control" id="lastName" name="lastName" placeholder="Doe" autocomplete="family-name" required>
       <div [hidden]="lastName.valid || lastName.pristine" class="alert alert-danger" translate>Last name is required.</div>
+    </div>
+    <div class="form-group">
+      <label for="countryCode" translate>Country</label>
+      <select [(ngModel)]="model.countryCode" #countryCode="ngModel" type="text" class="form-control" id="countryCode" name="countryCode" autocomplete="country">
+          <option *ngFor="let country of countries; let i = index" [value]="country.iso">{{country.name}}</option>
+      </select>
+      <div [hidden]="countryCode.valid || countryCode.pristine" class="alert alert-danger" translate>Please select a valid country.</div>
+    </div>
+    <div class="form-group">
+        <label for="phoneNumber" translate>Phone Number</label>
+        <input [(ngModel)]="model.phoneNumber" (keypress)="onPhoneNumberChange()" #phoneNumber="ngModel" 
+        type="tel" class="form-control" id="phoneNumber" name="phoneNumber" autocomplete="tel">
+        <div [hidden]="phoneNumber.valid || phoneNumber.pristine" class="alert alert-danger" translate>Please enter a valid phone number.</div>
+      </div>
+    <div class="form-group">
+      <label for="postalCode" translate>Zip Code</label>
+      <input [(ngModel)]="model.postalCode" #postalCode="ngModel" 
+      type="text" class="form-control" id="postalCode" name="postalCode" placeholder="90035" autocomplete="postal-code">
+      <div [hidden]="postalCode.valid || postalCode.pristine" class="alert alert-danger" translate>Please enter a valid zip code.</div>
+    </div>
+    <div class="form-group">
+      <label for="addressLine1" translate>Address Line 1</label>
+      <input [(ngModel)]="model.addressLine1" #addressLine1="ngModel" 
+      type="text" class="form-control" id="addressLine1" name="addressLine1" placeholder="123 Main St" autocomplete="address-line1">
+      <div [hidden]="addressLine1.valid || addressLine1.pristine" class="alert alert-danger" translate>Please enter a valid address.</div>
+    </div>
+    <div class="form-group">
+      <label for="addressLine2" translate>Address Line 2</label>
+      <input [(ngModel)]="model.addressLine2" #addressLine2="ngModel"
+       type="text" class="form-control" id="addressLine2" name="addressLine2" placeholder="Apt #123" autocomplete="address-line2">
+      <div [hidden]="addressLine2.valid || addressLine2.pristine" class="alert alert-danger" translate>Please enter a valid address.</div>
+    </div>
+    <div class="form-group">
+        <label for="city" translate>City</label>
+        <input [(ngModel)]="model.city" #city="ngModel" type="text" class="form-control" id="city" name="city" placeholder="Los Angeles" autocomplete="address-level2">
+        <div [hidden]="city.valid || city.pristine" class="alert alert-danger" translate>Please enter a valid city.</div>
+      </div>
+    <div class="form-group">
+      <label for="stateCode" translate>State</label>
+      <input [(ngModel)]="model.stateCode" #stateCode="ngModel" 
+      type="text" class="form-control" id="stateCode" name="stateCode" placeholder="CA" maxlength="2" autocomplete="address-level1">
+      <div [hidden]="stateCode.valid || stateCode.pristine" class="alert alert-danger" translate>Please enter a valid state code.</div>
+    </div>
+    <div class="form-group">
+      <label for="notes" translate>Notes</label>
+      <textarea [(ngModel)]="model.notes" #notes="ngModel" type="text" class="form-control" id="notes" name="notes"></textarea>
+      <small id="notesHelp" class="form-text text-muted">These notes will be shared with the mikvah attendant during every appointment that you make.</small>
     </div>
     <button type="submit" class="btn btn-primary" [disabled]="!profileForm.form.valid">Submit</button>
   </form>

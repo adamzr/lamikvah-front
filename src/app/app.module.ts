@@ -20,6 +20,10 @@ import { DirectionsModule } from './directions/directions.module';
 import { DonationsModule } from './donations/donations.module';
 import { MensModule } from './mens/mens.module';
 
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
+import { AuthenticationService } from './core/authentication/authentication.service';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -38,11 +42,18 @@ import { MensModule } from './mens/mens.module';
     DonationsModule,
     MensModule,
     CallbackModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ServiceWorkerModule.register('/ngsw-worker.js', {enabled: environment.production})
   ],
   declarations: [AppComponent],
   providers: [
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+  constructor(public auth: AuthenticationService) {
+    auth.scheduleRenewal();
+  }
+
+}
