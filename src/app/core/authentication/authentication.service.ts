@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 import 'rxjs/add/operator/filter';
 import { UserService } from '../../profile/user.service';
 import { Subscription } from 'rxjs/Subscription';
+''
+import { environment } from '../../../environments/environment';
 
 export interface Credentials {
   // Customize received credentials here
@@ -40,7 +42,7 @@ export class AuthenticationService {
     domain: 'mikvah.auth0.com',
     responseType: 'token id_token',
     audience: 'https://api.mikvahla.org',
-    redirectUri: 'http://localhost:4200/callback',
+    redirectUri: environment.callbackUrl,
     scope: 'openid profile create:appointments'
   });
 

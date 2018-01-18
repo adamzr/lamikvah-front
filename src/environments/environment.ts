@@ -7,6 +7,7 @@ export const environment = {
   production: false,
   version: '(dev)',
   serverUrl: 'http://localhost:8080',
+  callbackUrl: 'http://localhost:4200/callback',
   defaultLanguage: 'en-US',
   supportedLanguages: [
     'en-US',
