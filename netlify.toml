@@ -1,3 +1,3 @@
 [build]
   publish = "dist"
-  command = "ng build --prod"
+  command = "npm run build"

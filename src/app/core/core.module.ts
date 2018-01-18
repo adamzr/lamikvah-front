@@ -22,6 +22,10 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   }), http, options);
 }
 
+export function getToken(){
+  return localStorage.getItem('access_token');
+}
+
 @NgModule({
   imports: [
     CommonModule,
@@ -32,9 +36,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     HttpClientModule,
     JwtModule.forRoot({
       config: {
-        tokenGetter: () => {
-          return localStorage.getItem('access_token');
-        },
+        tokenGetter: getToken,
         whitelistedDomains: ['localhost:8080']
       }
     })
