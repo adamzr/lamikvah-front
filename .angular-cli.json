@@ -16,7 +16,8 @@
         "safari-pinned-tab.svg",
         "favicon-32x32.png",
         "favicon-16x16.png",
-        "browserconfig.xml"
+        "browserconfig.xml",
+        "_redirects"
       ],
       "index": "index.html",
       "main": "main.ts",
