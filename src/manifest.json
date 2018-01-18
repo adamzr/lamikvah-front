@@ -1,9 +1,15 @@
 {
-    "name": "LA Mikvah",
+    "name": "Los Angeles Mikvah Society",
+    "short_name": "LA Mikvah",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
             "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/favicon-512x512.png",
+            "sizes": "512x512",
             "type": "image/png"
         }
     ],
