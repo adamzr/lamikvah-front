@@ -17,6 +17,9 @@ export class User {
     public postalCode: string,
     public notes: string,
     public member: boolean,
+    public membershipPlan: string,
+    public membershipExpirationDate: string,
+    public membershipAutoRenewalEnabled: boolean,
     public defaultCard: CreditCard,
     public currentAppointment: AppointmentSlot
   ) {  }

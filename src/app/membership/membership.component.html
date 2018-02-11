@@ -57,14 +57,13 @@ There is no individual use fee for Mikvah members.
       <div class="card-body">
         <h4 class="card-title">Membership</h4>
         <p class="card-text">You are currently a member at the {{ currentLevel }} level.</p>
-        <p class="card-text">Your membership will automatically renew on {{ expirationDate }}.</p>
-        <p class="card-text">Renewals will be charged on your {{ savedCreditCard }}.</p>
-        <p class="card-text">To switch to a different card, please enter the new card information below.</p>
-        <div id="update-card-element" class="form-control" #updateCardInfo>
-            <!-- a Stripe Element will be inserted here. -->
-        </div>
-        <div id="update-card-errors" class="card-errors" role="alert" *ngIf="updateCardError">{{ updateCardError }}</div>
-        <input class="btn btn-danger" (click)="updateMembershipCard()" type="button" value="Update Card">
+        <p class="card-text">Your membership will expire on {{ expirationDate }}.</p>
+        <p class="card-text" *ngIf="autoRenewalEnabled">Your membership will automatically renew at that time, to disable automatic renewal, please click "Do Not Automatically Renew My Membership".</p>
+        <p class="card-text" *ngIf="!autoRenewalEnabled">Your membership will NOT automatically renew at that time, to enable automatic renewal, please click "Renew My Membership Automatically".</p>
+        <p class="card-text" *ngIf="autoRenewalEnabled">Renewals will be charged on your {{ savedCreditCard }}.</p>
+        <p class="card-text" *ngIf="autoRenewalEnabled">To switch to a different card, please change it on <a routerLink="/profile">the profile page.</a></p>
+        <input class="btn btn-danger" *ngIf="autoRenewalEnabled" (click)="disableAutoRenew()" type="button" value="Do Not Automatically Renew My Membership">
+        <input class="btn btn-primary" *ngIf="!autoRenewalEnabled" (click)="enableAutoRenew()" type="button" value="Renew My Membership Automatically">
       </div>
   </div>
   
@@ -97,10 +96,10 @@ There is no individual use fee for Mikvah members.
                     Use a different card
                   </label>
               </div>
-              <div id="create-card-element" class="form-control" #createCardInfo>
+              <div id="card-element" class="form-control" #cardInfo>
                   <!-- a Stripe Element will be inserted here. -->
               </div>
-              <div id="create-card-errors" class="card-errors" role="alert" *ngIf="createCardError">{{ createCardError }}</div>
+              <div id="card-errors" class="card-errors" role="alert" *ngIf="cardError">{{ cardError }}</div>
             </div>
             <button type="submit" class="btn btn-primary">Join</button>
         </form>

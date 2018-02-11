@@ -12,6 +12,7 @@ import { MembershipResponse } from './membership-response';
 
 const membershipPath = '/api/membership';
 const saveCreditCardPath = '/api/credit-card';
+const autoRenewPath = '/api/auto-renew';
 
 
 @Injectable()
@@ -31,6 +32,14 @@ export class MembershipService {
        token: token
      }
      return this.http.post<string>(saveCreditCardPath, cardRequest);
+  }
+
+  enableAutoRenew(): Observable<MembershipResponse> {
+    return this.http.post<MembershipResponse>(autoRenewPath, {"enabled": true});
+  }
+
+  disableAutoRenew(): Observable<MembershipResponse> {
+    return this.http.post<MembershipResponse>(autoRenewPath, {"enabled": false});
   }
 
 }
