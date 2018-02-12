@@ -23,7 +23,7 @@ import { MembershipService } from '../membership/membership.service';
 })
 export class ProfileComponent implements OnInit {
 
-  model: User;
+  model: User = new User("","","","","US","","","","","","","",false,"","",true,null,null);
   message: string = "";
   showMessage: boolean = false;
   hasNoProfile: boolean = true;
@@ -118,7 +118,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnDestroy() {
     if(this.card){
-      this.card.removeEventListener('change', this.cardHandler);
+      this.card.removeAllListeners();
       this.card.destroy();
     }
   }
@@ -135,6 +135,7 @@ export class ProfileComponent implements OnInit {
     this.alertClasses['alert-success'] = true;
     this.showMessage = true;
     this.message = message;
+    document.getElementById("message").scrollIntoView();
   }
 
   showErrorMessage(message: string){
@@ -142,6 +143,7 @@ export class ProfileComponent implements OnInit {
     this.alertClasses['alert-success'] = false;
     this.showMessage = true;
     this.message = message;
+    document.getElementById("message").scrollIntoView();
   }
 
   onCardChange({error} : { error: any}) {
@@ -196,6 +198,7 @@ export class ProfileComponent implements OnInit {
         console.log("Saved card", message)
         this.showSuccessMessage("Your new credit card information has been saved.");
         this.populateUserData();
+        this.card.clear();
       }, error => {
         console.log("Error saving card", error);
         this.showErrorMessage("There was a problem processing your credit card. Please try again later.");

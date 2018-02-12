@@ -83,7 +83,7 @@ export class MembershipComponent implements OnInit {
 
   ngOnDestroy() {
     if(this.card){
-      this.card.removeEventListener('change', this.cardHandler);
+      this.card.removeAllListeners();
       this.card.destroy();
     }
   }
@@ -116,8 +116,14 @@ export class MembershipComponent implements OnInit {
         }
 
         this.isMember = user.member;
-        this.currentLevel = user.membershipPlan;
-        this.expirationDate = user.membershipExpirationDate;
+        if(user.membershipPlan){
+          this.currentLevel = this.toTitleCase(user.membershipPlan);
+        }
+        
+        if(user.membershipExpirationDate){
+          let expirationDateMoment = moment(user.membershipExpirationDate);
+          this.expirationDate = expirationDateMoment.format('LL');
+        }        
         this.autoRenewalEnabled = user.membershipAutoRenewalEnabled;
 
       },
@@ -126,6 +132,10 @@ export class MembershipComponent implements OnInit {
         this.showErrorMessage("There was a problem getting your profile information. Please try again later.");
       }
     );
+  }
+
+  toTitleCase(str: string){
+      return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
   }
 
   clearMessages(){

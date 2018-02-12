@@ -90,7 +90,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     if(this.card){
-      this.card.removeEventListener('change', this.cardHandler);
+      this.card.removeAllListeners();
       this.card.destroy();
     }
   }
