@@ -23,7 +23,9 @@ export class HeaderComponent implements OnInit {
               private i18nService: I18nService) { }
 
   ngOnInit() {
-    this.userService.getUserName().subscribe(data => {this.userName = data;});
+    if(this.authenticationService.isAuthenticated()){
+      this.userService.getUserName().subscribe(data => {this.userName = data;});
+    }
   }
 
   toggleMenu() {

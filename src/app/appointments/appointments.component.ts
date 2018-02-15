@@ -110,18 +110,20 @@ export class AppointmentsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(){
-    this.appointmentsService.getAvailabilityMap().subscribe(
-      data => {
-        this.hasAvailabilityData = true;
-        this.availableDays = data[0];
-        this.availabilityMap = data[1];
-        this.model.date = this.availableDays[0].isoDay;
-        this.availableTimes = this.availabilityMap.get(this.model.date);
-        this.model.time = this.availableTimes[0].isoTime;
-      }
-    );
     this.isLoggedIn = this.authService.isAuthenticated();
-    this.populateUserInfo();
+    if(this.isLoggedIn){
+      this.appointmentsService.getAvailabilityMap().subscribe(
+        data => {
+          this.hasAvailabilityData = true;
+          this.availableDays = data[0];
+          this.availabilityMap = data[1];
+          this.model.date = this.availableDays[0].isoDay;
+          this.availableTimes = this.availabilityMap.get(this.model.date);
+          this.model.time = this.availableTimes[0].isoTime;
+        }
+      );
+      this.populateUserInfo();
+    }
   }
 
   populateUserInfo(){

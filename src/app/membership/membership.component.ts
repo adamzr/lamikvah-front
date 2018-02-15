@@ -99,7 +99,9 @@ export class MembershipComponent implements OnInit {
 
   ngOnInit(){
     this.isLoggedIn = this.authService.isAuthenticated();
-    this.populateUserInfo();
+    if(this.isLoggedIn){
+      this.populateUserInfo();
+    }
   }
 
   populateUserInfo(){

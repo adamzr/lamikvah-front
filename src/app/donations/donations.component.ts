@@ -139,26 +139,30 @@ export class DonationsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.message = "There was a problem processing your credit card. Please try again later.";
       } else {
         console.log('Success!', token);
-        this.donationsService.saveCreditCard(token.id).subscribe(message => {
-          console.log("Saved card", message);
-          this.makeDonation();
-        }, error => {
-          console.log("Error saving card", error);
-          this.alertClasses['alert-danger'] = true;
-          this.alertClasses['alert-success'] = false;
-          this.showMessage = true;
-          this.message = "There was a problem processing your credit card. Please try again later.";
-        });
+        if(this.user){
+          this.donationsService.saveCreditCard(token.id).subscribe(message => {
+            console.log("Saved card", message);
+            this.makeDonation(null); // Logged In User Using New Card
+          }, error => {
+            console.log("Error saving card", error);
+            this.alertClasses['alert-danger'] = true;
+            this.alertClasses['alert-success'] = false;
+            this.showMessage = true;
+            this.message = "There was a problem processing your credit card. Please try again later.";
+          });
+        } else {
+          this.makeDonation(token);// Not Logged In User Using New Card
+        }
       }
     } else {
-      this.makeDonation();
+      this.makeDonation(null); // Logged In User Using Saved Card
     }
     this.populateUserInfo();
     
   }
 
-  makeDonation(){
-    this.donationsService.makeDonation(this.model.amount).subscribe(response => {
+  makeDonation(token: string){
+    this.donationsService.makeDonation(this.model.amount, token).subscribe(response => {
       console.log("Got response for making donation.", response);
         this.alertClasses['alert-danger'] = false;
         this.alertClasses['alert-success'] = true;
