@@ -42,20 +42,22 @@
             <li>
             Rabbi Yosef Shusterman
             </li>
-            <li>
-            Rabbi Avrohom Teichman
-            </li>
             </ul>
         </div>
         <div class="col-sm-4 schedule">
             <h3>This Week's Schedule</h3>
             <p>
                 <strong>
-                    Week of Jan. 7, 2018<br/>
+                    Week of {{ firstDayInWeek }}<br/>
                     <br/>
-                                    5:45 pm - 9:30 pm (Sun)<br/>
+                    <span *ngFor="let day of dailyHours">
+                        <br *ngIf="day.weekday === 'Fri'"/>
+                        <span *ngIf="!day.closed">{{ day.start }} - {{ day.end }} ({{ day.weekday }})</span>
+                        <span *ngIf="day.closed">CLOSED</span>
+                        <br/>    
+                    </span>
                                 
-                                    5:45 pm - 9:30 pm (Mon)<br/>
+                                    <!-- 5:45 pm - 9:30 pm (Mon)<br/>
                                 
                                     5:45 pm - 9:30 pm (Tue)<br/>
                                 
@@ -67,7 +69,7 @@
                     
                                     5:45 pm - 6:15 pm (Fri)<br/>
                                 
-                                    6:30 pm - 9:30 pm (Sat)<br/>
+                                    6:30 pm - 9:30 pm (Sat)<br/> -->
                             </strong>
             </p>
             <small>Mikvah rooms will be available for preparation 45 minutes prior to opening hours, and no earlier.
