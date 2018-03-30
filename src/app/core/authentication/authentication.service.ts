@@ -33,6 +33,8 @@ const credentialsKey = 'credentials';
 @Injectable()
 export class AuthenticationService {
 
+  private requestedScopes: string = 'openid profile create:appointments';
+
   private _credentials: Credentials;
 
   private refreshSubscription: Subscription;
@@ -43,7 +45,7 @@ export class AuthenticationService {
     responseType: 'token id_token',
     audience: 'https://api.mikvahla.org',
     redirectUri: environment.callbackUrl,
-    scope: 'openid profile create:appointments'
+    scope: this.requestedScopes
   });
 
   constructor(public router: Router, public userService: UserService) {
@@ -83,6 +85,9 @@ export class AuthenticationService {
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('expires_at', expiresAt);
     this.scheduleRenewal();
+
+    const scopes = authResult.scope || this.requestedScopes || '';
+    localStorage.setItem('scopes', JSON.stringify(scopes));
   }
 
   public logout(): void {
@@ -100,6 +105,11 @@ export class AuthenticationService {
     // access token's expiry time
     const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
     return new Date().getTime() < expiresAt;
+  }
+
+  public userHasScopes(scopes: Array<string>): boolean {
+    const grantedScopes = JSON.parse(localStorage.getItem('scopes')).split(' ');
+    return scopes.every(scope => grantedScopes.includes(scope));
   }
 
   public renewToken() {

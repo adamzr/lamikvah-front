@@ -205,7 +205,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit, OnDestroy {
   saveAppointment(){
     console.log("Selected Date", this.model.date);
     console.log("Selected Time", this.model.time);
-    this.appointmentsService.createAppointment(this.model.date + "T" + this.model.time).subscribe(response => {
+    this.appointmentsService.createAppointment(this.model.date + "T" + this.model.time, this.model.notes).subscribe(response => {
       console.log("Got response for making appointment.", response);
       if(response.slot){
         this.processCurrentAppointment(response.slot);

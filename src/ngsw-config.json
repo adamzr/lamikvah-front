@@ -5,7 +5,6 @@
     "installMode": "prefetch",
     "resources": {
       "files": [
-        "/favicon.ico",
         "/index.html"
       ],
       "versionedFiles": [
@@ -20,7 +19,11 @@
     "updateMode": "prefetch",
     "resources": {
       "files": [
-        "/assets/**"
+        "/assets/**",
+        "*.png",
+        "*.ico",
+        "*.svg",
+        "*.xml"
       ]
     }
   }]

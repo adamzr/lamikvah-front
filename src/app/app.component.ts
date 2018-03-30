@@ -13,6 +13,7 @@ import { Observable } from 'rxjs/Observable';
 import { environment } from '../environments/environment';
 import { Logger } from './core/logger.service';
 import { I18nService } from './core/i18n.service';
+import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
 
 const log = new Logger('App');
 
@@ -27,7 +28,9 @@ export class AppComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private titleService: Title,
               private translateService: TranslateService,
-              private i18nService: I18nService) { }
+              private i18nService: I18nService,
+              private angulartics2GoogleAnalytics: Angulartics2GoogleAnalytics
+            ) { }
 
   ngOnInit() {
     // Setup logger

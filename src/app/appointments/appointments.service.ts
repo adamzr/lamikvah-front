@@ -23,9 +23,10 @@ export class AppointmentsService {
 
   constructor(private http: HttpClient) { }
 
-  createAppointment(time: string): Observable<AppointmentCreationResponse> {
+  createAppointment(time: string, notes: string): Observable<AppointmentCreationResponse> {
     let appointmentRequest = {
-      time: time
+      time: time,
+      notes: notes
     }
     return this.http.post<AppointmentCreationResponse>(appointmentCreationPath, appointmentRequest);
  }

@@ -24,6 +24,9 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { AuthenticationService } from './core/authentication/authentication.service';
 
+import { Angulartics2Module } from 'angulartics2';
+import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -43,6 +46,7 @@ import { AuthenticationService } from './core/authentication/authentication.serv
     MensModule,
     CallbackModule,
     AppRoutingModule,
+    Angulartics2Module.forRoot([Angulartics2GoogleAnalytics]),
     ServiceWorkerModule.register('/ngsw-worker.js', {enabled: environment.production})
   ],
   declarations: [AppComponent],
