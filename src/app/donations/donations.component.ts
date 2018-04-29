@@ -151,7 +151,7 @@ export class DonationsComponent implements OnInit, AfterViewInit, OnDestroy {
             this.message = "There was a problem processing your credit card. Please try again later.";
           });
         } else {
-          this.makeDonation(token);// Not Logged In User Using New Card
+          this.makeDonation(token.id);// Not Logged In User Using New Card
         }
       }
     } else {
