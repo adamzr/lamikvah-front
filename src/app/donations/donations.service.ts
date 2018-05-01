@@ -19,10 +19,12 @@ export class DonationsService {
 
   constructor(private http: HttpClient) { }
 
-  makeDonation(amount: number, token: string): Observable<DonationResponse> {
+  makeDonation(name: string, email: string, amount: number, token: string): Observable<DonationResponse> {
     let donation = {
       amount: amount,
-      token: token
+      token: token,
+      name: name,
+      email: email
     }
     return this.http.post<DonationResponse>(donationPath, donation);
  }

@@ -40,6 +40,17 @@
 				{{message}}
 		 </div>
 		  <form (ngSubmit)="onSubmit(donationForm)" #donationForm="ngForm">
+
+		<div class="form-group" *ngIf="!isLoggedIn">
+				<label for="name">Name</label>
+				<input class="form-control" id="name" name="name" [(ngModel)]="model.name" #nameField="ngModel" type="text" required />
+		</div>
+
+		<div class="form-group" *ngIf="!isLoggedIn">
+				<label for="name">E-mail</label>
+				<input class="form-control" id="email" name="email" [(ngModel)]="model.email" #emailField="ngModel" type="email" required />
+		</div>
+			
 			<div class="form-group">
 			  <label for="amount">Amount</label>
 			  <input class="form-control" id="amount" name="amount" [(ngModel)]="model.amount" #amountField="ngModel" type="number" step="0.01" min="1" list="defaultNumbers" required />

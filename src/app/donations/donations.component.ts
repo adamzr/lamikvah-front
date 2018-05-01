@@ -32,7 +32,7 @@ export class DonationsComponent implements OnInit, AfterViewInit, OnDestroy {
   };
   showMessage: boolean = false;
   message: string;
-  model: Donation = new Donation(54.00, "new");
+  model: Donation = new Donation("", "", 54.00, "new");
   card: any;
   cardHandler = this.onCardChange.bind(this);
   stripe: any;
@@ -43,6 +43,7 @@ export class DonationsComponent implements OnInit, AfterViewInit, OnDestroy {
   currentAppointmentId: number;
   savedCreditCard: string;
   hasSavedCreditCard: boolean = false;
+  isLoggedIn: boolean = false;
 
   @ViewChild('cardInfo') cardInfo: ElementRef;
 
@@ -96,6 +97,7 @@ export class DonationsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     if(this.authService.isAuthenticated()){
+      this.isLoggedIn = true;
       this.populateUserInfo();
     }
   }
@@ -162,7 +164,7 @@ export class DonationsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   makeDonation(token: string){
-    this.donationsService.makeDonation(this.model.amount, token).subscribe(response => {
+    this.donationsService.makeDonation(this.model.name, this.model.email, this.model.amount, token).subscribe(response => {
       console.log("Got response for making donation.", response);
         this.alertClasses['alert-danger'] = false;
         this.alertClasses['alert-success'] = true;
