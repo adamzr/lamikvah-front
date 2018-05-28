@@ -5,11 +5,11 @@ export const environment = {
   production: true,
   version: env.npm_package_version,
   serverUrl: 'https://mikvah.site',
-  callbackUrl: 'https://mikvah.website/callback',
+  callbackUrl: 'https://test.mikvah.website/callback',
   defaultLanguage: 'en-US',
   supportedLanguages: [
     'en-US',
     'fr-FR'
   ],
-  stripeKey: 'pk_live_dLo2lxvl9eKLaOqwk4XKFOi3'
+  stripeKey: 'pk_test_Xrh9lP7HMEWdXVqy6l2ixTqi'
 };

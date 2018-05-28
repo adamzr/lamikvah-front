@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "ng": "ng",
-    "build-test": "npm run copy-test && npm run env -s && ng build --sri",
+    "build-test": "npm run copy-test && npm run env -s && ng build --configuration=test --sri",
     "build-prod": "npm run copy-prod && npm run env -s && ng build --prod --sri",
     "start": "ng serve --proxy-config proxy.conf.js",
     "lint": "ng lint --type-check && stylelint \"src/**/*.scss\" --syntax scss && htmlhint \"src\" --config .htmlhintrc",
