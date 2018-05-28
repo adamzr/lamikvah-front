@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "ng": "ng",
-    "build": "npm run env -s && ng build --prod --sri",
+    "build-test": "npm run copy-test && npm run env -s && ng build --sri",
+    "build-prod": "npm run copy-prod && npm run env -s && ng build --prod --sri",
     "start": "ng serve --proxy-config proxy.conf.js",
     "lint": "ng lint --type-check && stylelint \"src/**/*.scss\" --syntax scss && htmlhint \"src\" --config .htmlhintrc",
     "test": "ng test",
@@ -13,7 +14,9 @@
     "translations:extract": "ngx-translate-extract --input ./src --output ./src/translations/template.json --format=json --clean -sort --marker extract",
     "docs": "hads ./docs -o",
     "env": "ngx-scripts env2json npm_package_version",
-    "generate": "ng generate"
+    "generate": "ng generate",
+    "copy-test": "mv src/_redirects-test src/_redirects",
+    "copy-prod": "mv src/_redirects-prod src/_redirects"
   },
   "dependencies": {
     "@angular/animations": "^5.1.3",

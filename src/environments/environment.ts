@@ -12,5 +12,6 @@ export const environment = {
   supportedLanguages: [
     'en-US',
     'fr-FR'
-  ]
+  ],
+  stripeKey: 'pk_test_Xrh9lP7HMEWdXVqy6l2ixTqi'
 };

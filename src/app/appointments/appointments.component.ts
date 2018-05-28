@@ -64,7 +64,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit, OnDestroy {
     ) { }
 
   ngAfterViewInit() {
-    this.stripe = (<any> window).Stripe('pk_test_Xrh9lP7HMEWdXVqy6l2ixTqi');
+    this.stripe = (<any> window).Stripe(environment.stripeKey);
     const elements = this.stripe.elements();
 
     // Custom styling can be passed to options when creating an Element.

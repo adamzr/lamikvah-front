@@ -14,6 +14,7 @@ import { User } from './user';
 import { countries, Country, State, Region } from "typed-countries";
 import { parse, format, asYouType, CountryCode } from 'libphonenumber-js';
 import { MembershipService } from '../membership/membership.service';
+import { environment } from '../../environments/environment';
 
 
 @Component({
@@ -92,7 +93,7 @@ export class ProfileComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.stripe = (<any> window).Stripe('pk_test_Xrh9lP7HMEWdXVqy6l2ixTqi');
+    this.stripe = (<any> window).Stripe(environment.stripeKey);
     const elements = this.stripe.elements();
 
     // Custom styling can be passed to options when creating an Element.
