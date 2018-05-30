@@ -164,7 +164,7 @@ export class DonationsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   makeDonation(token: string){
-    this.donationsService.makeDonation(this.model.name, this.model.email, this.model.amount, token).subscribe(response => {
+    this.donationsService.makeDonation(this.model.name, this.model.email, this.model.amount, token, this.isLoggedIn).subscribe(response => {
       console.log("Got response for making donation.", response);
         this.alertClasses['alert-danger'] = false;
         this.alertClasses['alert-success'] = true;

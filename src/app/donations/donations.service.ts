@@ -10,7 +10,8 @@ import { Observable } from 'rxjs/Observable';
 import { HttpClient } from '@angular/common/http';
 import { DonationResponse } from './donation-response';
 
-const donationPath = '/api/donate';
+const loggedInDonationPath = '/api/donate';
+const guestDonationPath = '/api/donate-guest';
 const saveCreditCardPath = '/api/credit-card';
 
 
@@ -19,13 +20,14 @@ export class DonationsService {
 
   constructor(private http: HttpClient) { }
 
-  makeDonation(name: string, email: string, amount: number, token: string): Observable<DonationResponse> {
+  makeDonation(name: string, email: string, amount: number, token: string, isLoggedIn: boolean): Observable<DonationResponse> {
     let donation = {
       amount: amount,
       token: token,
       name: name,
       email: email
     }
+    let donationPath = isLoggedIn ? loggedInDonationPath : guestDonationPath;
     return this.http.post<DonationResponse>(donationPath, donation);
  }
 
