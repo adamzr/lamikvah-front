@@ -1,10 +1,6 @@
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/of';
-
-
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { User } from './user';
 import { HttpClient } from '@angular/common/http';
 
@@ -25,7 +21,7 @@ export class UserService {
 
   getUserName(): Observable<string> {
     if(!localStorage.userName){
-      return this.getUser().map(user => {
+      return this.getUser().pipe(map(user => {
         if(user.firstName || user.lastName){
           var userName = (user.title + " " + user.firstName + " " + user.lastName).trim();
           localStorage.userName = userName;
@@ -33,9 +29,9 @@ export class UserService {
         } else {
           return "Mikvah User";
         }
-      });
+      }));
     } else {
-      return Observable.of(localStorage.userName);
+      return of(localStorage.userName);
     }
   }
 

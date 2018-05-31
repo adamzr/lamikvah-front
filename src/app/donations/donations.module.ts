@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
 
 import { DonationsRoutingModule } from './donations-routing.module';
 import { DonationsComponent } from './donations.component';
@@ -10,7 +9,6 @@ import { DonationsService } from './donations.service';
 @NgModule({
   imports: [
     CommonModule,
-    TranslateModule,
     FormsModule,
     DonationsRoutingModule
   ],

@@ -159,7 +159,9 @@ export class DonationsComponent implements OnInit, AfterViewInit, OnDestroy {
     } else {
       this.makeDonation(null); // Logged In User Using Saved Card
     }
-    this.populateUserInfo();
+    if(this.isLoggedIn){
+      this.populateUserInfo();
+    }
     
   }
 

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule }   from '@angular/forms';
 
 import { AppointmentsRoutingModule } from './appointments-routing.module';
@@ -10,7 +9,6 @@ import { AppointmentsService } from './appointments.service';
 @NgModule({
   imports: [
     CommonModule,
-    TranslateModule,
     FormsModule,
     AppointmentsRoutingModule
   ],

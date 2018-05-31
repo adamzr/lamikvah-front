@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/timer';
-import 'rxjs/add/observable/of';
+import { Observable ,  Subscription, of, timer} from 'rxjs';
+import { flatMap } from 'rxjs/operators';
 
 import * as auth0 from 'auth0-js';
 
 import { Router } from '@angular/router';
-import 'rxjs/add/operator/filter';
+
 import { UserService } from '../../profile/user.service';
-import { Subscription } from 'rxjs/Subscription';
-''
+
 import { environment } from '../../../environments/environment';
 
 export interface Credentials {
@@ -128,15 +126,15 @@ export class AuthenticationService {
   
     const expiresAt = JSON.parse(window.localStorage.getItem('expires_at'));
   
-    const source = Observable.of(expiresAt).flatMap(
+    const source = of(expiresAt).pipe(flatMap(
       expiresAt => {
   
         const now = Date.now();
   
         // Use the delay in a timer to
         // run the refresh at the proper time
-        return Observable.timer(Math.max(1, expiresAt - now));
-      });
+        return timer(Math.max(1, expiresAt - now));
+      }));
   
     // Once the delay time from above is
     // reached, get a new JWT and schedule

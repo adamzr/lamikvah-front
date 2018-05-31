@@ -1,8 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import { TranslateModule } from '@ngx-translate/core';
+import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
@@ -31,8 +30,7 @@ import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule,
-    TranslateModule.forRoot(),
+    HttpClientModule,
     NgbModule.forRoot(),
     CoreModule,
     SharedModule,

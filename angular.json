@@ -1,0 +1,201 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "los-angeles-mikvah-society": {
+      "root": "",
+      "sourceRoot": "src",
+      "projectType": "application",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "tsConfig": "src/tsconfig.app.json",
+            "polyfills": "src/polyfills.ts",
+            "assets": [
+              "src/assets",
+              "src/favicon.ico",
+              "src/robots.txt",
+              "src/manifest.json",
+              "src/apple-touch-icon.png",
+              "src/apple-touch-icon-57x57.png",
+              "src/apple-touch-icon-60x60.png",
+              "src/apple-touch-icon-72x72.png",
+              "src/apple-touch-icon-76x76.png",
+              "src/apple-touch-icon-114x114.png",
+              "src/apple-touch-icon-120x120.png",
+              "src/apple-touch-icon-144x144.png",
+              "src/apple-touch-icon-152x152.png",
+              "src/apple-touch-icon-180x180.png",
+              "src/safari-pinned-tab.svg",
+              "src/favicon-32x32.png",
+              "src/favicon-16x16.png",
+              "src/favicon-194x194.png",
+              "src/browserconfig.xml",
+              "src/_redirects",
+              "src/_headers",
+              "src/android-chrome-36x36.png",
+              "src/android-chrome-48x48.png",
+              "src/android-chrome-72x72.png",
+              "src/android-chrome-96x96.png",
+              "src/android-chrome-144x144.png",
+              "src/android-chrome-192x192.png",
+              "src/android-chrome-256x256.png",
+              "src/android-chrome-384x384.png",
+              "src/android-chrome-512x512.png",
+              "src/mstile-70x70.png",
+              "src/mstile-144x144.png",
+              "src/mstile-150x150.png",
+              "src/mstile-310x150.png",
+              "src/mstile-310x150.png",
+              "src/mstile-310x310.png"
+            ],
+            "styles": [
+              "src/main.scss",
+              "node_modules/font-awesome/css/font-awesome.css"
+            ],
+            "scripts": [
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "serviceWorker": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "los-angeles-mikvah-society:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "los-angeles-mikvah-society:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "los-angeles-mikvah-society:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "src/test.ts",
+            "karmaConfig": "./karma.conf.js",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "src/tsconfig.spec.json",
+            "scripts": [
+            ],
+            "styles": [
+              "src/main.scss",
+              "node_modules/font-awesome/css/font-awesome.css"
+            ],
+            "assets": [
+              "src/assets",
+              "src/favicon.ico",
+              "src/robots.txt",
+              "src/manifest.json",
+              "src/apple-touch-icon.png",
+              "src/apple-touch-icon-57x57.png",
+              "src/apple-touch-icon-60x60.png",
+              "src/apple-touch-icon-72x72.png",
+              "src/apple-touch-icon-76x76.png",
+              "src/apple-touch-icon-114x114.png",
+              "src/apple-touch-icon-120x120.png",
+              "src/apple-touch-icon-144x144.png",
+              "src/apple-touch-icon-152x152.png",
+              "src/apple-touch-icon-180x180.png",
+              "src/safari-pinned-tab.svg",
+              "src/favicon-32x32.png",
+              "src/favicon-16x16.png",
+              "src/favicon-194x194.png",
+              "src/browserconfig.xml",
+              "src/_redirects",
+              "src/_headers",
+              "src/android-chrome-36x36.png",
+              "src/android-chrome-48x48.png",
+              "src/android-chrome-72x72.png",
+              "src/android-chrome-96x96.png",
+              "src/android-chrome-144x144.png",
+              "src/android-chrome-192x192.png",
+              "src/android-chrome-256x256.png",
+              "src/android-chrome-384x384.png",
+              "src/android-chrome-512x512.png",
+              "src/mstile-70x70.png",
+              "src/mstile-144x144.png",
+              "src/mstile-150x150.png",
+              "src/mstile-310x150.png",
+              "src/mstile-310x150.png",
+              "src/mstile-310x310.png"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "src/tsconfig.app.json",
+              "src/tsconfig.spec.json"
+            ],
+            "exclude": []
+          }
+        }
+      }
+    },
+    "los-angeles-mikvah-society-e2e": {
+      "root": "",
+      "sourceRoot": "",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "./protractor.conf.js",
+            "devServerTarget": "los-angeles-mikvah-society:serve"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "e2e/tsconfig.e2e.json"
+            ],
+            "exclude": []
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "los-angeles-mikvah-society",
+  "schematics": {
+    "@schematics/angular:component": {
+      "prefix": "app",
+      "styleext": "scss"
+    },
+    "@schematics/angular:directive": {
+      "prefix": "app"
+    }
+  }
+}
