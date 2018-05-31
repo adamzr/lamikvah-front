@@ -1,0 +1,7 @@
+/*
+  X-Frame-Options: DENY
+  X-XSS-Protection: 1; mode=block; report=https://mikvah.report-uri.com/r/d/xss/enforce
+  X-Content-Type-Options: nosniff
+  Content-Security-Policy-Report-Only: default-src 'self' js.stripe.com www.google-analytics.com; script-src 'self' js.stripe.com www.google-analytics.com; style-src 'self' ; img-src 'self' www.google-analytics.com; font-src 'self' ; connect-src 'self' ; frame-src js.stripe.com; worker-src 'self' ; block-all-mixed-content; disown-opener; reflected-xss block; report-uri https://mikvah.report-uri.com/r/d/csp/reportOnly; require-sri-for style;
+  Referrer-Policy: same-origin
+  Expect-CT: max-age=0, report-uri="https://mikvah.report-uri.com/r/d/ct/reportOnly"

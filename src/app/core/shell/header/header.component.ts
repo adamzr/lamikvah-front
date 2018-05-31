@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 
 import { AuthenticationService } from '../../authentication/authentication.service';
-import { I18nService } from '../../i18n.service';
 import { UserService } from '../../../profile/user.service';
 
 @Component({
@@ -19,8 +18,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(private router: Router,
               private authenticationService: AuthenticationService,
-              private userService: UserService,
-              private i18nService: I18nService) { }
+              private userService: UserService) { }
 
   ngOnInit() {
     if(this.authenticationService.isAuthenticated()){
@@ -30,10 +28,6 @@ export class HeaderComponent implements OnInit {
 
   toggleMenu() {
     this.menuHidden = !this.menuHidden;
-  }
-
-  setLanguage(language: string) {
-    this.i18nService.language = language;
   }
 
   logout() {
@@ -46,14 +40,6 @@ export class HeaderComponent implements OnInit {
 
   get loggedIn(): boolean {
     return this.authenticationService.isAuthenticated();
-  }
-
-  get currentLanguage(): string {
-    return this.i18nService.language;
-  }
-
-  get languages(): string[] {
-    return this.i18nService.supportedLanguages;
   }
 
 }

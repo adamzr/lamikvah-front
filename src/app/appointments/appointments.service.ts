@@ -1,11 +1,8 @@
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/of';
-
 import * as moment from 'moment';
 
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { AvailableDay } from './available-day';
 import { AvailableTime } from './available-time';
 
@@ -43,7 +40,7 @@ export class AppointmentsService {
   }
 
   getAvailabilityMap(): Observable<[Array<AvailableDay>, Map<string, Array<AvailableTime>>]> {
-    return this.http.get<Array<string>>(appointmentsAvailabilityPath).map(times => {
+    return this.http.get<Array<string>>(appointmentsAvailabilityPath).pipe(map(times => {
       let responseTuple : [Array<AvailableDay>, Map<string, Array<AvailableTime>>];
       let availableDays: Array<AvailableDay> = [];
       let availabilityMap: Map<string, Array<AvailableTime>> = new Map<string, Array<AvailableTime>>();
@@ -65,7 +62,7 @@ export class AppointmentsService {
       }
       responseTuple = [availableDays, availabilityMap];
       return responseTuple;
-    });
+    }));
   }
 
 }

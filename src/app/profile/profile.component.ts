@@ -1,4 +1,4 @@
-import 'rxjs/add/operator/finally';
+
 
 import {
   Component,
@@ -79,7 +79,7 @@ export class ProfileComponent implements OnInit {
           this.hasSavedCard = true;
           this.savedCreditCard = this.model.defaultCard.brand + " ending in " + this.model.defaultCard.last4;
         } else {
-          this.hasSavedCard = true;
+          this.hasSavedCard = false;
         }
       },
       err => {

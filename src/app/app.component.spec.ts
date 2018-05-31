@@ -1,6 +1,5 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { TranslateModule } from '@ngx-translate/core';
 
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
@@ -10,7 +9,6 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        TranslateModule.forRoot(),
         CoreModule
       ],
       declarations: [AppComponent],
