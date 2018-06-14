@@ -2,6 +2,25 @@
   X-Frame-Options: DENY
   X-XSS-Protection: 1; mode=block; report=https://mikvah.report-uri.com/r/d/xss/enforce
   X-Content-Type-Options: nosniff
-  Content-Security-Policy-Report-Only: default-src 'self' js.stripe.com www.google-analytics.com; script-src 'self' js.stripe.com www.google-analytics.com; style-src 'self' ; img-src 'self' www.google-analytics.com; font-src 'self' ; connect-src 'self' ; frame-src js.stripe.com; worker-src 'self' ; block-all-mixed-content; disown-opener; reflected-xss block; report-uri https://mikvah.report-uri.com/r/d/csp/reportOnly; require-sri-for style;
+  Content-Security-Policy-Report-Only: default-src 'self' js.stripe.com www.google-analytics.com; script-src 'self' 'unsafe-inline' js.stripe.com www.google-analytics.com; style-src 'self' 'unsafe-inline' ; img-src 'self' data: www.google-analytics.com; font-src 'self' ; connect-src 'self' ; frame-src js.stripe.com; worker-src 'self' ; block-all-mixed-content; disown-opener; reflected-xss block; report-uri https://mikvah.report-uri.com/r/d/csp/reportOnly; require-sri-for style;
   Referrer-Policy: same-origin
   Expect-CT: max-age=0, report-uri="https://mikvah.report-uri.com/r/d/ct/reportOnly"
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+
+/runtime.*.js
+	Cache-Control: public, max-age=31536000, immutable
+	
+/polyfills.*.js
+	Cache-Control: public, max-age=31536000, immutable
+	
+/main.*.js
+	Cache-Control: public, max-age=31536000, immutable
+	
+/styles.*.css
+	Cache-Control: public, max-age=31536000, immutable
+	
+/assets/*.jpg
+	Cache-Control: public, max-age=31536000, immutable
+	
+/fontawesome-webfont.*.woff2
+	Cache-Control: public, max-age=31536000, immutable

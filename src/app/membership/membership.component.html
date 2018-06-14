@@ -62,12 +62,12 @@ There is no individual use fee for Mikvah members.
         <h4 class="card-title">Membership</h4>
         <p class="card-text">You are currently a member at the {{ currentLevel }} level.</p>
         <p class="card-text">Your membership will expire on {{ expirationDate }}.</p>
-        <p class="card-text" *ngIf="autoRenewalEnabled">Your membership will automatically renew at that time, to disable automatic renewal, please click "Do Not Automatically Renew My Membership".</p>
-        <p class="card-text" *ngIf="!autoRenewalEnabled">Your membership will NOT automatically renew at that time, to enable automatic renewal, please click "Renew My Membership Automatically".</p>
-        <p class="card-text" *ngIf="autoRenewalEnabled">Renewals will be charged on your {{ savedCreditCard }}.</p>
-        <p class="card-text" *ngIf="autoRenewalEnabled">To switch to a different card, please change it on <a routerLink="/profile">the profile page.</a></p>
-        <input class="btn btn-danger" *ngIf="autoRenewalEnabled" (click)="disableAutoRenew()" type="button" value="Do Not Automatically Renew My Membership">
-        <input class="btn btn-primary" *ngIf="!autoRenewalEnabled" (click)="enableAutoRenew()" type="button" value="Renew My Membership Automatically">
+        <p class="card-text" *ngIf="autoRenewalEnabled && hasSavedCreditCard">Your membership will automatically renew at that time, to disable automatic renewal, please click "Do Not Automatically Renew My Membership".</p>
+        <p class="card-text" *ngIf="!autoRenewalEnabled && hasSavedCreditCard">Your membership will NOT automatically renew at that time, to enable automatic renewal, please click "Renew My Membership Automatically".</p>
+        <p class="card-text" *ngIf="autoRenewalEnabled && hasSavedCreditCard">Renewals will be charged on your {{ savedCreditCard }}.</p>
+        <p class="card-text" *ngIf="autoRenewalEnabled && hasSavedCreditCard">To switch to a different card, please change it on <a routerLink="/profile">the profile page.</a></p>
+        <input class="btn btn-danger" *ngIf="autoRenewalEnabled && hasSavedCreditCard" (click)="disableAutoRenew()" type="button" value="Do Not Automatically Renew My Membership">
+        <input class="btn btn-primary" *ngIf="!autoRenewalEnabled && hasSavedCreditCard" (click)="enableAutoRenew()" type="button" value="Renew My Membership Automatically">
       </div>
   </div>
   

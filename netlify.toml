@@ -1,9 +1,6 @@
 [build]
   publish = "dist"
 
-[build.environment]
-  YARN_CACHE_FOLDER = "~/.yarn_cache"
-
 [context.production]
   command = "npm run build-prod"
 
