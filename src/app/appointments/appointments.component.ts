@@ -174,7 +174,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   async onSubmit(form: NgForm) {
     this.clearMessages();
-    if(this.model.paymentMethod === "new"){
+    if(!this.isMember && this.model.paymentMethod === "new"){
       const { token, error } = await this.stripe.createToken(this.card);
       if (error) {
         console.log('Something is wrong:', error);
