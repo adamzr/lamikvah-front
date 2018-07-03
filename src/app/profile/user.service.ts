@@ -23,7 +23,7 @@ export class UserService {
     if(!localStorage.userName){
       return this.getUser().pipe(map(user => {
         if(user.firstName || user.lastName){
-          var userName = (user.title + " " + user.firstName + " " + user.lastName).trim();
+          var userName = (this.nullSafeString(user.title) + " " + this.nullSafeString(user.firstName) + " " + this.nullSafeString(user.lastName)).trim();
           localStorage.userName = userName;
           return userName;
         } else {
@@ -33,6 +33,13 @@ export class UserService {
     } else {
       return of(localStorage.userName);
     }
+  }
+
+  nullSafeString(str: string){
+    if(!str){
+      return "";
+    }
+    return str;
   }
 
 }

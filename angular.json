@@ -52,7 +52,8 @@
               "src/mstile-150x150.png",
               "src/mstile-310x150.png",
               "src/mstile-310x150.png",
-              "src/mstile-310x310.png"
+              "src/mstile-310x310.png",
+              "src/google866e4b10e7b64511.html"
             ],
             "styles": [
               "src/main.scss",
@@ -148,7 +149,8 @@
               "src/mstile-150x150.png",
               "src/mstile-310x150.png",
               "src/mstile-310x150.png",
-              "src/mstile-310x310.png"
+              "src/mstile-310x310.png",
+              "src/google866e4b10e7b64511.html"
             ]
           }
         },
