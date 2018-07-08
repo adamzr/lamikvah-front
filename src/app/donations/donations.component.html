@@ -11,7 +11,7 @@
 </div>
 <ul>
 	<li>
-		<strong>SPONSOR A BRIDE- $360.00 (and up)</strong><br />
+		<strong>SPONSOR A BRIDE- $500.00 (and up)</strong><br />
 		Perhaps you will attend a wedding of a couple who has everything they need, or a couple
 		whose budget will be stretched by Mikvah fees for the year. Now, you can sponsor a bride for
 		a year&rsquo;s Mikvah attendance and have a share in their mitzvah.
@@ -30,7 +30,7 @@
 	</li>
 </ul>
 <div>
-	For donations in excess of $360.00, which would entitle you to an annual Mikvah membership and its benefits,
+	For donations in excess of $500.00, which would entitle you to an annual Mikvah membership and its benefits,
 	please click on the <a routerLink="fees-and-membership">Fees/Membership</a> tab.
 </div>
 <div class="card donation-card">
@@ -55,7 +55,7 @@
 			  <label for="amount">Amount</label>
 			  <input class="form-control" id="amount" name="amount" [(ngModel)]="model.amount" #amountField="ngModel" type="number" step="0.01" min="1" list="defaultNumbers" required />
 			  <datalist id="defaultNumbers">
-					<option value="360.00">Sponsor A Bride</option>
+					<option value="500.00">Sponsor A Bride</option>
 					<option value="180.00">Friend Of The Mikvah</option>
 					<option value="54.00">Yartzeit and Memorial Contribution</option>
 				  </datalist>
@@ -81,7 +81,7 @@
 				</div>
 				<div id="card-errors" class="card-errors" role="alert" *ngIf="error">{{ error }}</div>
 			  </div>
-			  <button type="submit" class="btn btn-primary">Donate</button>
+			  <button type="submit" class="btn btn-primary" [disabled]="donationInProgress">Donate</button>
 		  </form>
 		</div>
 	</div>

@@ -53,6 +53,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit, OnDestroy {
   currentAppointment: string;
   currentAppointmentId: number;
   savedCreditCard: string;
+  appointmentCreationFormSubmissionInProgress: boolean = false;
 
   @ViewChild('cardInfo') cardInfo: ElementRef;
 
@@ -173,6 +174,11 @@ export class AppointmentsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   async onSubmit(form: NgForm) {
+    if(this.appointmentCreationFormSubmissionInProgress){
+      console.log("Submission of form already in progress. Stopping double submit.");
+      return;
+    }
+    this.appointmentCreationFormSubmissionInProgress = true;
     this.clearMessages();
     if(!this.isMember && this.model.paymentMethod === "new"){
       const { token, error } = await this.stripe.createToken(this.card);
@@ -182,6 +188,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.alertClasses['alert-success'] = false;
         this.showMessage = true;
         this.message = "There was a problem processing your credit card. Please try again later.";
+        this.appointmentCreationFormSubmissionInProgress = false;
       } else {
         console.log('Success!', token);
         this.appointmentsService.saveCreditCard(token.id).subscribe(message => {
@@ -193,12 +200,12 @@ export class AppointmentsComponent implements OnInit, AfterViewInit, OnDestroy {
           this.alertClasses['alert-success'] = false;
           this.showMessage = true;
           this.message = "There was a problem processing your credit card. Please try again later.";
+          this.appointmentCreationFormSubmissionInProgress = false;
         });
       }
     } else {
       this.saveAppointment();
     }
-    this.populateUserInfo();
     
   }
 
@@ -219,12 +226,16 @@ export class AppointmentsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.showMessage = true;
         this.message = response.message;
       }
+      this.populateUserInfo();
+      this.appointmentCreationFormSubmissionInProgress = false;
     }, error => {
       console.error("Error making appointment.", error)
       this.alertClasses['alert-danger'] = true;
       this.alertClasses['alert-success'] = false;
       this.showMessage = true;
       this.message = "There was a problem making your appointment. Please try again later.";
+      this.populateUserInfo();
+      this.appointmentCreationFormSubmissionInProgress = false;
     });
   }
 
