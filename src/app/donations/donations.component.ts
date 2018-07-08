@@ -44,6 +44,7 @@ export class DonationsComponent implements OnInit, AfterViewInit, OnDestroy {
   savedCreditCard: string;
   hasSavedCreditCard: boolean = false;
   isLoggedIn: boolean = false;
+  donationInProgress: boolean = false;
 
   @ViewChild('cardInfo') cardInfo: ElementRef;
 
@@ -130,6 +131,11 @@ export class DonationsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   async onSubmit(form: NgForm) {
+    if(this.donationInProgress){
+      console.log("Donation is already being processed!");
+      return;
+    }
+    this.donationInProgress = true;
     this.clearMessages();
     if(this.model.paymentMethod === "new"){
       const { token, error } = await this.stripe.createToken(this.card);
@@ -139,6 +145,7 @@ export class DonationsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.alertClasses['alert-success'] = false;
         this.showMessage = true;
         this.message = "There was a problem processing your credit card. Please try again later.";
+        this.donationInProgress = false;
       } else {
         console.log('Success!', token);
         if(this.user){
@@ -151,6 +158,7 @@ export class DonationsComponent implements OnInit, AfterViewInit, OnDestroy {
             this.alertClasses['alert-success'] = false;
             this.showMessage = true;
             this.message = "There was a problem processing your credit card. Please try again later.";
+            this.donationInProgress = false;
           });
         } else {
           this.makeDonation(token.id);// Not Logged In User Using New Card
@@ -158,9 +166,6 @@ export class DonationsComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     } else {
       this.makeDonation(null); // Logged In User Using Saved Card
-    }
-    if(this.isLoggedIn){
-      this.populateUserInfo();
     }
     
   }
@@ -172,12 +177,20 @@ export class DonationsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.alertClasses['alert-success'] = true;
         this.showMessage = true;
         this.message = response.message;
+        this.donationInProgress = false;
+        if(this.isLoggedIn){
+          this.populateUserInfo();
+        }
     }, error => {
       console.error("Error making donation.", error)
       this.alertClasses['alert-danger'] = true;
       this.alertClasses['alert-success'] = false;
       this.showMessage = true;
       this.message = "There was a problem making your donation. Please try again later.";
+      this.donationInProgress = false;
+      if(this.isLoggedIn){
+        this.populateUserInfo();
+      }
     });
   }
 
