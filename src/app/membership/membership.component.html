@@ -25,13 +25,8 @@ See below for information on joining.
 There is no individual use fee for Mikvah members.
 </p>
 
-<p>There are four different levels of membership available to show your support:</p>
+<p>There are three different levels of membership available to show your support:</p>
 <ul>
-<li>
-<p>
-  $360 Standard Membership
-</p>
-</li>
 <li>
 <p>
   $500 Silver Membership
@@ -39,12 +34,12 @@ There is no individual use fee for Mikvah members.
 </li>
 <li>
 <p>
-  $1000 Gold Membership
+  $1,000 Gold Membership
 </p>
 </li>
 <li>
 <p>
-  $1800 Platinum Membership
+  $1,800 Chai Membership
 </p>
 </li>
 </ul>
@@ -78,10 +73,9 @@ There is no individual use fee for Mikvah members.
           <div class="form-group">
             <label for="level">Level</label>
             <select class="form-control" id="level" name="level" [(ngModel)]="model.plan" #levelField="ngModel" required>
-              <option value="standard-1">Standard - $360</option>
               <option value="silver-1">Silver - $500</option>
-              <option value="gold-1">Gold - $1000</option>
-              <option value="platinum-1">Platinum - $1800</option>
+              <option value="gold-1">Gold - $1,000</option>
+              <option value="platinum-1">Chai - $1,800</option>
             </select>
           </div>
   
@@ -105,7 +99,7 @@ There is no individual use fee for Mikvah members.
               </div>
               <div id="card-errors" class="card-errors" role="alert" *ngIf="cardError">{{ cardError }}</div>
             </div>
-            <button type="submit" class="btn btn-primary">Join</button>
+            <button type="submit" class="btn btn-primary" [disabled]="membershipCreationInProgress">Join</button>
         </form>
       </div>
   </div>

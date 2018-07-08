@@ -15,19 +15,19 @@
         <div class="form-group">
           <label for="title" translate>Title</label>
           <input [(ngModel)]="model.title" #titleField="ngModel" 
-          type="text" class="form-control" id="title" name="title" placeholder="Mrs." autocomplete="honorific-prefix" required>
+          type="text" class="form-control" id="title" name="title" autocomplete="honorific-prefix" required>
           <div [hidden]="titleField.valid || titleField.pristine" class="alert alert-danger" translate>Title is required.</div>
         </div>
         <div class="form-group">
           <label for="firstName" translate>First Name</label>
           <input [(ngModel)]="model.firstName" #firstName="ngModel" 
-          type="text" class="form-control" id="firstName" name="firstName" placeholder="Jane" autocomplete="given-name" required>
+          type="text" class="form-control" id="firstName" name="firstName" autocomplete="given-name" required>
           <div [hidden]="firstName.valid || firstName.pristine" class="alert alert-danger" translate>First name is required.</div>
         </div>
         <div class="form-group">
           <label for="lastName" translate>Last Name</label>
           <input [(ngModel)]="model.lastName" #lastName="ngModel" 
-          type="text" class="form-control" id="lastName" name="lastName" placeholder="Doe" autocomplete="family-name" required>
+          type="text" class="form-control" id="lastName" name="lastName" autocomplete="family-name" required>
           <div [hidden]="lastName.valid || lastName.pristine" class="alert alert-danger" translate>Last name is required.</div>
         </div>
         <div class="form-group">
@@ -46,30 +46,30 @@
         <div class="form-group">
           <label for="postalCode" translate>Zip Code</label>
           <input [(ngModel)]="model.postalCode" #postalCode="ngModel" 
-          type="text" class="form-control" id="postalCode" name="postalCode" placeholder="90035" autocomplete="postal-code">
+          type="text" class="form-control" id="postalCode" name="postalCode" autocomplete="postal-code">
           <div [hidden]="postalCode.valid || postalCode.pristine" class="alert alert-danger" translate>Please enter a valid zip code.</div>
         </div>
         <div class="form-group">
           <label for="addressLine1" translate>Address Line 1</label>
           <input [(ngModel)]="model.addressLine1" #addressLine1="ngModel" 
-          type="text" class="form-control" id="addressLine1" name="addressLine1" placeholder="123 Main St" autocomplete="address-line1">
+          type="text" class="form-control" id="addressLine1" name="addressLine1" autocomplete="address-line1">
           <div [hidden]="addressLine1.valid || addressLine1.pristine" class="alert alert-danger" translate>Please enter a valid address.</div>
         </div>
         <div class="form-group">
           <label for="addressLine2" translate>Address Line 2</label>
           <input [(ngModel)]="model.addressLine2" #addressLine2="ngModel"
-          type="text" class="form-control" id="addressLine2" name="addressLine2" placeholder="Apt #123" autocomplete="address-line2">
+          type="text" class="form-control" id="addressLine2" name="addressLine2" autocomplete="address-line2">
           <div [hidden]="addressLine2.valid || addressLine2.pristine" class="alert alert-danger" translate>Please enter a valid address.</div>
         </div>
         <div class="form-group">
             <label for="city" translate>City</label>
-            <input [(ngModel)]="model.city" #city="ngModel" type="text" class="form-control" id="city" name="city" placeholder="Los Angeles" autocomplete="address-level2">
+            <input [(ngModel)]="model.city" #city="ngModel" type="text" class="form-control" id="city" name="city" autocomplete="address-level2">
             <div [hidden]="city.valid || city.pristine" class="alert alert-danger" translate>Please enter a valid city.</div>
           </div>
         <div class="form-group">
           <label for="stateCode" translate>State</label>
           <input [(ngModel)]="model.stateCode" #stateCode="ngModel" 
-          type="text" class="form-control" id="stateCode" name="stateCode" placeholder="CA" maxlength="2" autocomplete="address-level1">
+          type="text" class="form-control" id="stateCode" name="stateCode" maxlength="2" autocomplete="address-level1">
           <div [hidden]="stateCode.valid || stateCode.pristine" class="alert alert-danger" translate>Please enter a valid state code.</div>
         </div>
         <div class="form-group">
@@ -84,7 +84,8 @@
   <div class="card payment-card">
     <div class="card-body">
       <h5 class="card-tile">Payment Information</h5>
-      <p class="card-text">Subscriptions will be charged to this card</p>
+      <p class="card-text">Subscriptions will be charged to this card, it will also be used as the default card for payment when making appointments.</p>
+      <p class="card-text">You are not required to have a card on file to use the site.</p>
       <p class="card-text" *ngIf="!hasSavedCard">You do not currently have a payment method on file.</p>
       <p class="card-text" *ngIf="hasSavedCard">Your current card is {{savedCreditCard}}.</p>
       <p class="card-text" *ngIf="hasSavedCard">To change your card on file, please enter a new card below and click "Save".</p>
