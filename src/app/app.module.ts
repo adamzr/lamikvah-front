@@ -1,5 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {
+  Injectable,
+  Injector,
+  InjectionToken,
+  NgModule,
+  ErrorHandler
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -26,6 +32,30 @@ import { AuthenticationService } from './core/authentication/authentication.serv
 import { Angulartics2Module } from 'angulartics2';
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
 
+import * as Rollbar from 'rollbar';
+
+const rollbarConfig = {
+  accessToken: '7084372e84204614bd910b214fe038ff',
+  captureUncaught: true,
+  captureUnhandledRejections: true,
+};
+
+@Injectable()
+export class RollbarErrorHandler implements ErrorHandler {
+  constructor(private injector: Injector) {}
+
+  handleError(err:any) : void {
+    var rollbar = this.injector.get(RollbarService);
+    rollbar.error(err.originalError || err);
+  }
+}
+
+export function rollbarFactory() {
+    return new Rollbar(rollbarConfig);
+}
+
+export const RollbarService = new InjectionToken<Rollbar>('rollbar');
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -49,6 +79,8 @@ import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
   ],
   declarations: [AppComponent],
   providers: [
+    { provide: ErrorHandler, useClass: RollbarErrorHandler },
+    { provide: RollbarService, useFactory: rollbarFactory }
   ],
   bootstrap: [AppComponent]
 })

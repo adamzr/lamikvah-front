@@ -47,6 +47,7 @@ export class MembershipComponent implements OnInit {
   expirationDate: string;
   autoRenewalEnabled: boolean = true;
   savedCreditCard: string;
+  membershipCreationInProgress: boolean = false;
 
   @ViewChild('cardInfo') cardInfo: ElementRef;
 
@@ -185,12 +186,18 @@ export class MembershipComponent implements OnInit {
   }
 
   async onCreateSubmit(form: NgForm) {
+    if(this.membershipCreationInProgress){
+      console.log("Form alreay submitted!");
+      return;
+    }
+    this.membershipCreationInProgress = true;
     this.clearMessages();
     if(this.model.paymentMethod === "new"){
       const { token, error } = await this.stripe.createToken(this.card);
       if (error) {
         console.log('Something is wrong:', error);
         this.showErrorMessage("There was a problem processing your credit card. Please try again later.");
+        this.membershipCreationInProgress = false;
       } else {
         console.log('Success!', token);
         this.membershipService.saveCreditCard(token.id).subscribe(message => {
@@ -199,12 +206,12 @@ export class MembershipComponent implements OnInit {
         }, error => {
           console.log("Error saving card", error);
           this.showErrorMessage("There was a problem processing your credit card. Please try again later.");
+          this.membershipCreationInProgress = false;
         });
       }
     } else {
       this.createMembership();
     }
-    this.populateUserInfo();
     
   }
 
@@ -212,9 +219,13 @@ export class MembershipComponent implements OnInit {
     this.membershipService.createMembership(this.model.plan).subscribe(response => {
       console.log("Got response for creating membership.", response);
       this.showSuccessMessage(response.message);
+      this.membershipCreationInProgress = false;
+      this.populateUserInfo();
     }, error => {
       console.error("Error creating membership.", error)
       this.showErrorMessage("There was a problem processing your membership request. Please try again later.");
+      this.membershipCreationInProgress = false;
+      this.populateUserInfo();
     });
   }
 

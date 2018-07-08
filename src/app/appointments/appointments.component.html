@@ -83,7 +83,7 @@
             <textarea [(ngModel)]="model.notes" #notes="ngModel" type="text" class="form-control" id="notes" name="notes"></textarea>
             <small id="notesHelp" class="form-text text-muted">These notes will be shared with the mikvah attendant.</small>
           </div>
-          <button type="submit" class="btn btn-primary">Reserve</button>
+          <button type="submit" class="btn btn-primary" [disabled]="appointmentCreationFormSubmissionInProgress">Reserve</button>
       </form>
     </div>
 </div>
