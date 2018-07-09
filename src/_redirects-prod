@@ -1,4 +1,4 @@
-/ngsw.json /error.json 404
-/ngsw.json* /error.json 404
+/ngsw.json https://httpstat.us/404 404
+/ngsw.json* https://httpstat.us/404 404
 /api/*  https://api.mikvah.site/:splat  200
 /*    /index.html   200
