@@ -2,7 +2,7 @@
 import env from './.env.json';
 
 export const environment = {
-  production: true,
+  production: false,
   version: env.npm_package_version,
   serverUrl: 'https://mikvah.site',
   callbackUrl: 'https://test.mikvah.website/callback',
