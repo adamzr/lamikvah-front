@@ -8,7 +8,11 @@
         "/index.html",
         "/*.bundle.css",
         "/*.bundle.js",
-        "/*.chunk.js"
+        "/*.chunk.js",
+        "/runtime.*.js",
+        "/polyfills.*.js",
+        "/main.*.js",
+        "/styles.*.css"
       ]
     }
   }, {
