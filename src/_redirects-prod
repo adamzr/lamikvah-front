@@ -1,2 +1,4 @@
+/ngsw.json /index.html 404
+/ngsw.json* /index.html 404
 /api/*  https://api.mikvah.site/:splat  200
 /*    /index.html   200
