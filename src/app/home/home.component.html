@@ -53,24 +53,10 @@
                     <span *ngFor="let day of dailyHours">
                         <br *ngIf="day.weekday === 'Fri'"/>
                         <span *ngIf="!day.closed">{{ day.start }} - {{ day.end }} ({{ day.weekday }})</span>
-                        <span *ngIf="day.closed">CLOSED</span>
+                        <span *ngIf="day.closed">CLOSED ({{ day.weekday }})</span>
                         <br/>    
                     </span>
-                                
-                                    <!-- 5:45 pm - 9:30 pm (Mon)<br/>
-                                
-                                    5:45 pm - 9:30 pm (Tue)<br/>
-                                
-                                    5:45 pm - 9:30 pm (Wed)<br/>
-                                
-                                    5:45 pm - 9:30 pm (Thu)<br/>
-                                
-                    <br/>
-                    
-                                    5:45 pm - 6:15 pm (Fri)<br/>
-                                
-                                    6:30 pm - 9:30 pm (Sat)<br/> -->
-                            </strong>
+                </strong>
             </p>
             <small>Mikvah rooms will be available for preparation 45 minutes prior to opening hours, and no earlier.
             <br/>

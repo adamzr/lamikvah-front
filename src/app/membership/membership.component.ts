@@ -18,6 +18,7 @@ import { lang } from 'moment';
 import { Membership } from './membership';
 import { MembershipService } from './membership.service';
 import { environment } from '../../environments/environment';
+import { Angulartics2 } from '../../../node_modules/angulartics2';
 
 @Component({
   selector: 'app-membership',
@@ -55,7 +56,8 @@ export class MembershipComponent implements OnInit {
     private membershipService: MembershipService,
     private cd: ChangeDetectorRef,
     private authService: AuthenticationService,
-    private userService: UserService
+    private userService: UserService,
+    private angulartics2: Angulartics2
     ) { }
 
   ngAfterViewInit() {
@@ -167,6 +169,12 @@ export class MembershipComponent implements OnInit {
     this.clearMessages();
     this.membershipService.disableAutoRenew().subscribe(response => {
       this.showSuccessMessage(response.message);
+      this.angulartics2.eventTrack.next({ 
+        action: 'disabled',
+        properties: { 
+          category: 'autoRenew'
+        },
+      });
       this.populateUserInfo();
     }, error => {
       console.error("Disabling auto-renew error", error);
@@ -178,6 +186,12 @@ export class MembershipComponent implements OnInit {
     this.clearMessages();
     this.membershipService.enableAutoRenew().subscribe(response => {
       this.showSuccessMessage(response.message);
+      this.angulartics2.eventTrack.next({ 
+        action: 'enabled',
+        properties: { 
+          category: 'autoRenew'
+        },
+      });
       this.populateUserInfo();
     }, error => {
       console.error("Enabling auto-renew error", error);
@@ -219,6 +233,12 @@ export class MembershipComponent implements OnInit {
     this.membershipService.createMembership(this.model.plan).subscribe(response => {
       console.log("Got response for creating membership.", response);
       this.showSuccessMessage(response.message);
+      this.angulartics2.eventTrack.next({ 
+        action: 'joined',
+        properties: { 
+          category: 'membership'
+        },
+      });
       this.membershipCreationInProgress = false;
       this.populateUserInfo();
     }, error => {
