@@ -8,13 +8,20 @@
         "/favicon.ico",
         "/index.html",
         "/*.css",
-        "/*.js",
-        "/*.png",
-        "/*.jpeg",
-        "/*.jpg",
-        "/*.woff2",
-        "/*.svg",
-        "/*.xml"
+        "/*.js"
+      ]
+    }
+  }, {
+    "name": "assets",
+    "installMode": "lazy",
+    "updateMode": "prefetch",
+    "resources": {
+      "files": [
+        "/assets/**",
+        "/**/*.png",
+        "/**/*.xml",
+        "/**/*.json",
+        "/**/*.svg"
       ]
     }
   }]

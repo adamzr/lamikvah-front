@@ -59,8 +59,7 @@
               "src/main.scss",
               "node_modules/font-awesome/css/font-awesome.css"
             ],
-            "scripts": [
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -125,8 +124,7 @@
             "karmaConfig": "./karma.conf.js",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
-            "scripts": [
-            ],
+            "scripts": [],
             "styles": [
               "src/main.scss",
               "node_modules/font-awesome/css/font-awesome.css"
