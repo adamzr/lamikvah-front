@@ -115,10 +115,8 @@ export class AppointmentsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(){
-    console.log("Init...");
     this.isLoggedIn = this.authService.isAuthenticated();
     if(this.isLoggedIn){
-      console.log("Logged in...");
       this.loadAvailabilityMap();
       this.populateUserInfo();
     }
@@ -138,10 +136,8 @@ export class AppointmentsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   populateUserInfo(){
-    console.log("Getting user info...");
     this.userService.getUser().subscribe(
       user => {
-        console.log("Got user...", user);
         this.user = user;
         if(user.currentAppointment){
           this.processCurrentAppointment(user.currentAppointment);
@@ -173,16 +169,12 @@ export class AppointmentsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   processCurrentAppointment(slot: AppointmentSlot){
     slot = new AppointmentSlot(slot.id, slot.start, slot.lastCancellation);
-    console.log("Processing appointment", slot);
     let momentTime = moment(slot.start);
     this.currentAppointment =  momentTime.format("dddd, MMMM Do, YYYY [at] h:mm a");
     this.currentAppointmentId = slot.id;
     this.hasCurrentAppointment = true;
     this.lastCancelationDate = slot.getLastCancellationDate();
-    console.log("Last Cancellation Time", this.lastCancelationDate);
     this.isCancellable = new Date() < this.lastCancelationDate;
-    console.log("Now", new Date());
-    console.log("Is Cancellable", this.isCancellable)
     var timeUntilCancellationIsOver = this.lastCancelationDate.getTime() - (new Date()).getTime();
     var that = this;
     setTimeout(function(){
@@ -214,12 +206,9 @@ export class AppointmentsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.message = "There was a problem processing your credit card. Please try again later.";
         this.appointmentCreationFormSubmissionInProgress = false;
       } else {
-        console.log('Success!', token);
         this.appointmentsService.saveCreditCard(token.id).subscribe(message => {
-          console.log("Saved card", message)
           this.saveAppointment();
         }, error => {
-          console.log("Error saving card", error);
           this.alertClasses['alert-danger'] = true;
           this.alertClasses['alert-success'] = false;
           this.showMessage = true;
@@ -234,10 +223,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   saveAppointment(){
-    console.log("Selected Date", this.model.date);
-    console.log("Selected Time", this.model.time);
     this.appointmentsService.createAppointment(this.model.date + "T" + this.model.time, this.model.notes).subscribe(response => {
-      console.log("Got response for making appointment.", response);
       if(response.slot){
         this.processCurrentAppointment(response.slot);
         this.alertClasses['alert-danger'] = false;

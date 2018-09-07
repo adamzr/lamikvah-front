@@ -81,7 +81,7 @@
       </form>
     </div>
   </div>
-  <div class="card payment-card">
+  <div class="card payment-card" *ngIf="hasSavedCard">
     <div class="card-body">
       <h5 class="card-tile">Payment Information</h5>
       <p class="card-text">Subscriptions will be charged to this card, it will also be used as the default card for payment when making appointments.</p>

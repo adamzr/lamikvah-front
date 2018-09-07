@@ -38,8 +38,6 @@
               "src/browserconfig.xml",
               "src/_redirects",
               "src/_headers",
-              "src/error.json",
-              "src/ngsw-worker.js",
               "src/android-chrome-36x36.png",
               "src/android-chrome-48x48.png",
               "src/android-chrome-72x72.png",
@@ -75,7 +73,7 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "serviceWorker": false,
+              "serviceWorker": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -93,7 +91,7 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "serviceWorker": false,
+              "serviceWorker": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -155,8 +153,6 @@
               "src/browserconfig.xml",
               "src/_redirects",
               "src/_headers",
-              "src/error.json",
-              "src/ngsw-worker.js",
               "src/android-chrome-36x36.png",
               "src/android-chrome-48x48.png",
               "src/android-chrome-72x72.png",
