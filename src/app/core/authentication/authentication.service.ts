@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { Observable ,  Subscription, of, timer} from 'rxjs';
+import { Injectable, Inject } from '@angular/core';
+import { Subscription, of, timer} from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 
 import * as auth0 from 'auth0-js';
@@ -55,12 +55,20 @@ export class AuthenticationService {
   }
 
   public handleAuthentication(): void {
+    // const rollbar = this.injector.get(RollbarService);
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         window.location.hash = '';
         this.setSession(authResult);
         this.userService.getUser().subscribe(user => {
           if(user.firstName || user.lastName){
+            window.rollbar.configure({
+              payload: {
+                id: user.id,
+                username: user.email,
+                email: user.email
+              }
+            });
             localStorage.setItem("hasProfile", "true");
             this.router.navigate(['/appointments']);
           } else {

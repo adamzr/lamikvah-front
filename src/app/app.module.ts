@@ -1,10 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import {
   Injectable,
-  Injector,
   InjectionToken,
   NgModule,
-  ErrorHandler
+  ErrorHandler,
+  Inject
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -40,21 +40,22 @@ const rollbarConfig = {
   captureUnhandledRejections: true,
 };
 
+export const RollbarService = new InjectionToken<Rollbar>('rollbar');
+
 @Injectable()
 export class RollbarErrorHandler implements ErrorHandler {
-  constructor(private injector: Injector) {}
+  constructor(@Inject(RollbarService) private rollbar: Rollbar) {}
 
   handleError(err:any) : void {
-    var rollbar = this.injector.get(RollbarService);
-    rollbar.error(err.originalError || err);
+    this.rollbar.error(err.originalError || err);
   }
 }
 
 export function rollbarFactory() {
-    return new Rollbar(rollbarConfig);
+    const rollbar = new Rollbar(rollbarConfig);
+    (<any>window).rollbar = rollbar;
+    return rollbar;
 }
-
-export const RollbarService = new InjectionToken<Rollbar>('rollbar');
 
 @NgModule({
   imports: [
@@ -80,7 +81,7 @@ export const RollbarService = new InjectionToken<Rollbar>('rollbar');
   declarations: [AppComponent],
   providers: [
     { provide: ErrorHandler, useClass: RollbarErrorHandler },
-    { provide: RollbarService, useFactory: rollbarFactory }
+    { provide: RollbarService, useFactory: rollbarFactory}
   ],
   bootstrap: [AppComponent]
 })

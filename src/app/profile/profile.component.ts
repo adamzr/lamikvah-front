@@ -24,7 +24,7 @@ import { environment } from '../../environments/environment';
 })
 export class ProfileComponent implements OnInit {
 
-  model: User = new User("","","","","US","","","","","","","",false,"","",true,null,null);
+  model: User = new User(-1, "","","","","US","","","","","","","",false,"","",true,null,null);
   message: string = "";
   showMessage: boolean = false;
   hasNoProfile: boolean = true;
