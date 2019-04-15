@@ -62,7 +62,7 @@ export class AuthenticationService {
         this.setSession(authResult);
         this.userService.getUser().subscribe(user => {
           if(user.firstName || user.lastName){
-            window.rollbar.configure({
+            (<any>window).rollbar.configure({
               payload: {
                 id: user.id,
                 username: user.email,
