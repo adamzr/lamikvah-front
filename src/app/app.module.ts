@@ -62,7 +62,7 @@ export function rollbarFactory() {
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    NgbModule.forRoot(),
+    NgbModule,
     CoreModule,
     SharedModule,
     HomeModule,
