@@ -1,9 +1,5 @@
-
-
 import {
   Component,
-  AfterViewInit,
-  OnDestroy,
   OnInit,
   ViewChild,
   ElementRef,
@@ -11,8 +7,8 @@ import {
 } from '@angular/core';
 import { UserService } from './user.service';
 import { User } from './user';
-import { countries, Country, State, Region } from "typed-countries";
-import { parse, format, asYouType, CountryCode } from 'libphonenumber-js';
+import { countries, Country } from "typed-countries";
+import { parse, format, AsYouType, CountryCode } from 'libphonenumber-js';
 import { MembershipService } from '../membership/membership.service';
 import { environment } from '../../environments/environment';
 
@@ -42,7 +38,7 @@ export class ProfileComponent implements OnInit {
     'alert-success':  false
   };
 
-  @ViewChild('cardInfo') cardInfo: ElementRef;
+  @ViewChild('cardInfo', { static: false }) cardInfo: ElementRef;
 
   constructor(
      private cd: ChangeDetectorRef,
@@ -162,7 +158,7 @@ export class ProfileComponent implements OnInit {
 
     if(this.model.phoneNumber){
       let parsedPhoneNumber = parse(this.model.phoneNumber, this.model.countryCode as CountryCode);
-      this.model.phoneNumber = format(parsedPhoneNumber, "International_plaintext");
+      this.model.phoneNumber = format(parsedPhoneNumber, "INTERNATIONAL");
     }
 
     this.userService.saveUser(this.model).subscribe(
@@ -184,7 +180,7 @@ export class ProfileComponent implements OnInit {
 
   onPhoneNumberChange(){
 
-    this.model.phoneNumber = new asYouType(this.model.countryCode as CountryCode).input(this.model.phoneNumber);
+    this.model.phoneNumber = new AsYouType(this.model.countryCode as CountryCode).input(this.model.phoneNumber);
 
   }
 

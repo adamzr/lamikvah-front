@@ -10,6 +10,9 @@ import { UserService } from '../../profile/user.service';
 
 import { environment } from '../../../environments/environment';
 
+import { RollbarService } from '../../rollbar';
+import * as Rollbar from 'rollbar';
+
 export interface Credentials {
   // Customize received credentials here
   username: string;
@@ -46,7 +49,7 @@ export class AuthenticationService {
     scope: this.requestedScopes
   });
 
-  constructor(public router: Router, public userService: UserService) {
+  constructor(public router: Router, public userService: UserService, @Inject(RollbarService) private rollbar: Rollbar) {
     this._credentials = JSON.parse(sessionStorage.getItem(credentialsKey) || localStorage.getItem(credentialsKey));
   }
 
@@ -62,7 +65,7 @@ export class AuthenticationService {
         this.setSession(authResult);
         this.userService.getUser().subscribe(user => {
           if(user.firstName || user.lastName){
-            (<any>window).rollbar.configure({
+            this.rollbar.configure({
               payload: {
                 id: user.id,
                 username: user.email,

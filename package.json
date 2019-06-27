@@ -38,7 +38,7 @@
     "bootstrap": "4.0.0-beta",
     "core-js": "^2.4.1",
     "font-awesome": "^4.7.0",
-    "libphonenumber-js": "^1.7.15",
+    "libphonenumber-js": "^1.7.20",
     "lodash": "^4.17.11",
     "moment": "^2.20.1",
     "rollbar": "^2.4.2",

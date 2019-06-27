@@ -50,7 +50,7 @@ export class MembershipComponent implements OnInit {
   savedCreditCard: string;
   membershipCreationInProgress: boolean = false;
 
-  @ViewChild('cardInfo') cardInfo: ElementRef;
+  @ViewChild('cardInfo', { static: false }) cardInfo: ElementRef;
 
   constructor(
     private membershipService: MembershipService,

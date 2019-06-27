@@ -15,7 +15,7 @@ import { UserService } from '../profile/user.service';
 import { AppointmentsService } from '../appointments/appointments.service';
 import { Donation } from './donation';
 import { DonationsService } from './donations.service';
-import { NgForm } from '@angular/forms/src/directives/ng_form';
+import { NgForm } from '@angular/forms';
 import { Angulartics2 } from '../../../node_modules/angulartics2';
 
 @Component({
@@ -47,7 +47,7 @@ export class DonationsComponent implements OnInit, AfterViewInit, OnDestroy {
   isLoggedIn: boolean = false;
   donationInProgress: boolean = false;
 
-  @ViewChild('cardInfo') cardInfo: ElementRef;
+  @ViewChild('cardInfo', { static: true }) cardInfo: ElementRef;
 
 
   constructor(

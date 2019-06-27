@@ -32,30 +32,7 @@ import { AuthenticationService } from './core/authentication/authentication.serv
 import { Angulartics2Module } from 'angulartics2';
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
 
-import * as Rollbar from 'rollbar';
-
-const rollbarConfig = {
-  accessToken: '7084372e84204614bd910b214fe038ff',
-  captureUncaught: true,
-  captureUnhandledRejections: true,
-};
-
-export const RollbarService = new InjectionToken<Rollbar>('rollbar');
-
-@Injectable()
-export class RollbarErrorHandler implements ErrorHandler {
-  constructor(@Inject(RollbarService) private rollbar: Rollbar) {}
-
-  handleError(err:any) : void {
-    this.rollbar.error(err.originalError || err);
-  }
-}
-
-export function rollbarFactory() {
-    const rollbar = new Rollbar(rollbarConfig);
-    (<any>window).rollbar = rollbar;
-    return rollbar;
-}
+import { RollbarService, rollbarFactory, RollbarErrorHandler } from './rollbar';
 
 @NgModule({
   imports: [
@@ -81,7 +58,7 @@ export function rollbarFactory() {
   declarations: [AppComponent],
   providers: [
     { provide: ErrorHandler, useClass: RollbarErrorHandler },
-    { provide: RollbarService, useFactory: rollbarFactory}
+    { provide: RollbarService, useFactory: rollbarFactory }
   ],
   bootstrap: [AppComponent]
 })
