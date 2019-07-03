@@ -39,6 +39,7 @@ export class ProfileComponent implements OnInit {
   };
 
   @ViewChild('cardInfo', { static: false }) cardInfo: ElementRef;
+  @ViewChild("messageElement", { static: false }) messageElement: ElementRef;
 
   constructor(
      private cd: ChangeDetectorRef,
@@ -80,10 +81,7 @@ export class ProfileComponent implements OnInit {
       },
       err => {
         console.error("Failed to get user!", err);
-        this.alertClasses['alert-danger'] = true;
-        this.alertClasses['alert-success'] = false;
-        this.showMessage = true;
-        this.message = "There was a problem getting your profile information. Please try again later.";
+        this.showErrorMessage("There was a problem getting your profile information. Please try again later.");
       }
     );
   }
@@ -132,7 +130,7 @@ export class ProfileComponent implements OnInit {
     this.alertClasses['alert-success'] = true;
     this.showMessage = true;
     this.message = message;
-    document.getElementById("message").scrollIntoView();
+    this.messageElement.nativeElement.scrollIntoView();
   }
 
   showErrorMessage(message: string){
@@ -140,7 +138,7 @@ export class ProfileComponent implements OnInit {
     this.alertClasses['alert-success'] = false;
     this.showMessage = true;
     this.message = message;
-    document.getElementById("message").scrollIntoView();
+    this.messageElement.nativeElement.scrollIntoView();
   }
 
   onCardChange({error} : { error: any}) {
