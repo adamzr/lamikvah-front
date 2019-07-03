@@ -130,6 +130,7 @@ export class ProfileComponent implements OnInit {
     this.alertClasses['alert-success'] = true;
     this.showMessage = true;
     this.message = message;
+    this.cd.detectChanges();
     this.messageElement.nativeElement.scrollIntoView();
   }
 
@@ -138,6 +139,7 @@ export class ProfileComponent implements OnInit {
     this.alertClasses['alert-success'] = false;
     this.showMessage = true;
     this.message = message;
+    this.cd.detectChanges();
     this.messageElement.nativeElement.scrollIntoView();
   }
 
