@@ -14,7 +14,6 @@ import { RollbarService } from '../../rollbar';
 import * as Rollbar from 'rollbar';
 
 export interface Credentials {
-  // Customize received credentials here
   username: string;
   token: string;
 }
@@ -58,7 +57,6 @@ export class AuthenticationService {
   }
 
   public handleAuthentication(): void {
-    // const rollbar = this.injector.get(RollbarService);
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         window.location.hash = '';
@@ -72,6 +70,7 @@ export class AuthenticationService {
                 email: user.email
               }
             });
+            this.rollbar.info("Test log: Login complete!");
             localStorage.setItem("hasProfile", "true");
             this.router.navigate(['/appointments']);
           } else {
