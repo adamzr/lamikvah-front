@@ -61,21 +61,28 @@ export class AuthenticationService {
       if (authResult && authResult.accessToken && authResult.idToken) {
         window.location.hash = '';
         this.setSession(authResult);
-        this.userService.getUser().subscribe(user => {
-          if(user.firstName || user.lastName){
-            this.rollbar.configure({
-              payload: {
-                id: user.id,
-                username: user.email,
-                email: user.email
-              }
-            });
-            this.rollbar.info("Test log: Login complete!");
-            localStorage.setItem("hasProfile", "true");
-            this.router.navigate(['/appointments']);
-          } else {
-            localStorage.setItem("hasProfile", "false");
-            this.router.navigate(['/profile']);
+        this.userService.getUser().subscribe({ 
+          next: user => {
+            if(user.firstName || user.lastName){
+              this.rollbar.configure({
+                payload: {
+                  person: {
+                    id: user.id,
+                    username: user.email,
+                    email: user.email
+                  }
+                }
+              });
+              localStorage.setItem("hasProfile", "true");
+              this.router.navigate(['/appointments']);
+            } else {
+              localStorage.setItem("hasProfile", "false");
+              this.router.navigate(['/profile']);
+            }
+          },
+          error: err => {
+            this.router.navigate(['/home']);
+            console.log(err);
           }
         })
         

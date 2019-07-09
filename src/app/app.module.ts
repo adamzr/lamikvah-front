@@ -52,7 +52,7 @@ import { RollbarService, rollbarFactory, RollbarErrorHandler } from './rollbar';
     MensModule,
     CallbackModule,
     AppRoutingModule,
-    Angulartics2Module.forRoot([Angulartics2GoogleAnalytics]),
+    Angulartics2Module.forRoot(),
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   declarations: [AppComponent],
