@@ -35,6 +35,7 @@ export class AppComponent implements OnInit {
     }
 
     log.debug('init');
+    this.angulartics2GoogleAnalytics.startTracking();
   }
 
 }

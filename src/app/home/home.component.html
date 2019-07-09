@@ -43,6 +43,9 @@
             Rabbi Yosef Shusterman
             </li>
             </ul>
+            <div id="auth0badge">
+                <a width="150" height="50" href="https://auth0.com/?utm_source=oss&utm_medium=gp&utm_campaign=oss" target="_blank" alt="Single Sign On & Token Based Authentication - Auth0"><img width="150" height="50" alt="JWT Auth for open source projects" src="//cdn.auth0.com/oss/badges/a0-badge-light.png"/></a>
+            </div>
         </div>
         <div class="col-sm-4 schedule">
             <h3>This Week's Schedule</h3>
@@ -53,30 +56,23 @@
                     <span *ngFor="let day of dailyHours">
                         <br *ngIf="day.weekday === 'Fri'"/>
                         <span *ngIf="!day.closed">{{ day.start }} - {{ day.end }} ({{ day.weekday }})</span>
-                        <span *ngIf="day.closed">CLOSED</span>
+                        <span *ngIf="day.closed">CLOSED ({{ day.weekday }})</span>
                         <br/>    
                     </span>
-                                
-                                    <!-- 5:45 pm - 9:30 pm (Mon)<br/>
-                                
-                                    5:45 pm - 9:30 pm (Tue)<br/>
-                                
-                                    5:45 pm - 9:30 pm (Wed)<br/>
-                                
-                                    5:45 pm - 9:30 pm (Thu)<br/>
-                                
-                    <br/>
-                    
-                                    5:45 pm - 6:15 pm (Fri)<br/>
-                                
-                                    6:30 pm - 9:30 pm (Sat)<br/> -->
-                            </strong>
+                </strong>
             </p>
             <small>Mikvah rooms will be available for preparation 45 minutes prior to opening hours, and no earlier.
             <br/>
             <br/>
+            Both appointments and walk-ins are welcome.
+            <br />
+            <br />
             Please note that on Motzaei Shabbat as well as Motzaei Yom Tov (Saturday Nights and at the close of Holidays), no one 
-                will be allowed into the MIkvah until 45 minutes after Havdallah when the Mikvah attendant arrives.</small>
+                will be allowed into the Mikvah until 45 minutes after Havdallah when the Mikvah attendant arrives.
+            </small>
+            <br/>
+            <br />
+            <strong>Please make sure to arrive at least one half hour before closing time, so you can be out by closing time and avoid late fees.</strong>
         </div>
       </div>
     

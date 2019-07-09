@@ -1,7 +1,7 @@
 <div class="container">
   <h1 translate>Profile</h1>
   <p *ngIf="hasNoProfile">Please submit your profile information below. This is required before you can make appointments.</p>
-  <div [ngClass]="alertClasses" role="alert" [hidden]="!showMessage" id="message">
+  <div [ngClass]="alertClasses" role="alert" [hidden]="!showMessage" id="message" #messageElement>
     {{message}}
   </div>
   <div class="card">
@@ -81,7 +81,7 @@
       </form>
     </div>
   </div>
-  <div class="card payment-card">
+  <div class="card payment-card" *ngIf="hasSavedCard">
     <div class="card-body">
       <h5 class="card-tile">Payment Information</h5>
       <p class="card-text">Subscriptions will be charged to this card, it will also be used as the default card for payment when making appointments.</p>

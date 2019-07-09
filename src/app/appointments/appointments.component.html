@@ -13,10 +13,10 @@
   Appointments can be made up to one hour before the mikvah opens that day.
 </p>
 <p>
-  You cannot make appointments for rooms with baths at this time.
+  <strong>You cannot make appointments for rooms with baths at this time. Appointments are for rooms that only have showers.</strong>
 </p>
 <p>
-  Appointments can be cancelled anytime before your appointment for a refund.
+  Appointments can be cancelled anytime before the mikvah opens for a refund. After the mikvah opens, your appointment cannot be cancelled.
 </p>
 <p>
   Please show up on time. If you are not at the mikvah at the time of the appointment, you will lose your appointment, and any fees charged will not be refunded.
@@ -37,7 +37,7 @@
     <div class="card-body">
       <h4 class="card-title">Current Appointment</h4>
       <p class="card-text">{{ currentAppointment }}</p>
-      <input class="btn btn-danger" (click)="cancelAppointment()" type="button" value="Cancel">
+      <input class="btn btn-danger" *ngIf="isCancellable" (click)="cancelAppointment()" type="button" value="Cancel">
     </div>
 </div>
 

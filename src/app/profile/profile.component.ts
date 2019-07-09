@@ -1,9 +1,5 @@
-
-
 import {
   Component,
-  AfterViewInit,
-  OnDestroy,
   OnInit,
   ViewChild,
   ElementRef,
@@ -11,8 +7,8 @@ import {
 } from '@angular/core';
 import { UserService } from './user.service';
 import { User } from './user';
-import { countries, Country, State, Region } from "typed-countries";
-import { parse, format, asYouType, CountryCode } from 'libphonenumber-js';
+import { countries, Country } from "typed-countries";
+import { parse, format, AsYouType, CountryCode } from 'libphonenumber-js';
 import { MembershipService } from '../membership/membership.service';
 import { environment } from '../../environments/environment';
 
@@ -24,7 +20,7 @@ import { environment } from '../../environments/environment';
 })
 export class ProfileComponent implements OnInit {
 
-  model: User = new User("","","","","US","","","","","","","",false,"","",true,null,null);
+  model: User = new User(-1, "","","","","US","","","","","","","",false,"","",true,null,null);
   message: string = "";
   showMessage: boolean = false;
   hasNoProfile: boolean = true;
@@ -42,7 +38,8 @@ export class ProfileComponent implements OnInit {
     'alert-success':  false
   };
 
-  @ViewChild('cardInfo') cardInfo: ElementRef;
+  @ViewChild('cardInfo', { static: false }) cardInfo: ElementRef;
+  @ViewChild("messageElement", { static: false }) messageElement: ElementRef;
 
   constructor(
      private cd: ChangeDetectorRef,
@@ -84,10 +81,7 @@ export class ProfileComponent implements OnInit {
       },
       err => {
         console.error("Failed to get user!", err);
-        this.alertClasses['alert-danger'] = true;
-        this.alertClasses['alert-success'] = false;
-        this.showMessage = true;
-        this.message = "There was a problem getting your profile information. Please try again later.";
+        this.showErrorMessage("There was a problem getting your profile information. Please try again later.");
       }
     );
   }
@@ -136,7 +130,8 @@ export class ProfileComponent implements OnInit {
     this.alertClasses['alert-success'] = true;
     this.showMessage = true;
     this.message = message;
-    document.getElementById("message").scrollIntoView();
+    this.cd.detectChanges();
+    this.messageElement.nativeElement.scrollIntoView();
   }
 
   showErrorMessage(message: string){
@@ -144,7 +139,8 @@ export class ProfileComponent implements OnInit {
     this.alertClasses['alert-success'] = false;
     this.showMessage = true;
     this.message = message;
-    document.getElementById("message").scrollIntoView();
+    this.cd.detectChanges();
+    this.messageElement.nativeElement.scrollIntoView();
   }
 
   onCardChange({error} : { error: any}) {
@@ -162,7 +158,7 @@ export class ProfileComponent implements OnInit {
 
     if(this.model.phoneNumber){
       let parsedPhoneNumber = parse(this.model.phoneNumber, this.model.countryCode as CountryCode);
-      this.model.phoneNumber = format(parsedPhoneNumber, "International_plaintext");
+      this.model.phoneNumber = format(parsedPhoneNumber, "INTERNATIONAL");
     }
 
     this.userService.saveUser(this.model).subscribe(
@@ -184,7 +180,7 @@ export class ProfileComponent implements OnInit {
 
   onPhoneNumberChange(){
 
-    this.model.phoneNumber = new asYouType(this.model.countryCode as CountryCode).input(this.model.phoneNumber);
+    this.model.phoneNumber = new AsYouType(this.model.countryCode as CountryCode).input(this.model.phoneNumber);
 
   }
 

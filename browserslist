@@ -1,5 +1,5 @@
-# List of supported browsers, for autoprefixer
-# See https://github.com/ai/browserslist
-
-Last 2 versions
 > 1%
+last 2 versions
+Firefox ESR
+not dead
+not IE 9-11

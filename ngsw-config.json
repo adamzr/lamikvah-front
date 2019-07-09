@@ -5,26 +5,22 @@
     "installMode": "prefetch",
     "resources": {
       "files": [
+        "/favicon.ico",
         "/index.html",
-        "/*.bundle.css",
-        "/*.bundle.js",
-        "/*.chunk.js"
+        "/*.css",
+        "/*.js"
       ]
     }
   }, {
     "name": "assets",
-    "installMode": "prefetch",
+    "installMode": "lazy",
     "updateMode": "prefetch",
     "resources": {
       "files": [
         "/assets/**",
-        "*.png",
-        "*.ico",
-        "*.svg",
-        "*.xml",
-        "/**/*.woff2",
-        "/**/*.jpg",
-        "/**/*.jpeg"
+        "/**/*.png",
+        "/**/*.xml",
+        "/**/*.svg"
       ]
     }
   }]

@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { Observable ,  Subscription, of, timer} from 'rxjs';
+import { Injectable, Inject } from '@angular/core';
+import { Subscription, of, timer} from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 
 import * as auth0 from 'auth0-js';
@@ -10,8 +10,10 @@ import { UserService } from '../../profile/user.service';
 
 import { environment } from '../../../environments/environment';
 
+import { RollbarService } from '../../rollbar';
+import * as Rollbar from 'rollbar';
+
 export interface Credentials {
-  // Customize received credentials here
   username: string;
   token: string;
 }
@@ -46,7 +48,7 @@ export class AuthenticationService {
     scope: this.requestedScopes
   });
 
-  constructor(public router: Router, public userService: UserService) {
+  constructor(public router: Router, public userService: UserService, @Inject(RollbarService) private rollbar: Rollbar) {
     this._credentials = JSON.parse(sessionStorage.getItem(credentialsKey) || localStorage.getItem(credentialsKey));
   }
 
@@ -59,13 +61,28 @@ export class AuthenticationService {
       if (authResult && authResult.accessToken && authResult.idToken) {
         window.location.hash = '';
         this.setSession(authResult);
-        this.userService.getUser().subscribe(user => {
-          if(user.firstName || user.lastName){
-            localStorage.setItem("hasProfile", "true");
-            this.router.navigate(['/appointments']);
-          } else {
-            localStorage.setItem("hasProfile", "false");
-            this.router.navigate(['/profile']);
+        this.userService.getUser().subscribe({ 
+          next: user => {
+            if(user.firstName || user.lastName){
+              this.rollbar.configure({
+                payload: {
+                  person: {
+                    id: user.id,
+                    username: user.email,
+                    email: user.email
+                  }
+                }
+              });
+              localStorage.setItem("hasProfile", "true");
+              this.router.navigate(['/appointments']);
+            } else {
+              localStorage.setItem("hasProfile", "false");
+              this.router.navigate(['/profile']);
+            }
+          },
+          error: err => {
+            this.router.navigate(['/home']);
+            console.log(err);
           }
         })
         

@@ -4,6 +4,7 @@ import { AppointmentSlot } from "./appointment";
 export class User {
 
   constructor(
+    public id: number,
     public email: string,
     public title: string,
     public firstName: string,

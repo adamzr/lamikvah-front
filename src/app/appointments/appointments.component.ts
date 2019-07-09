@@ -20,6 +20,7 @@ import { UserService } from '../profile/user.service';
 import * as moment from 'moment';
 import { AppointmentSlot } from '../profile/appointment';
 import { lang } from 'moment';
+import { Angulartics2 } from '../../../node_modules/angulartics2';
 
 @Component({
   selector: 'app-appointments',
@@ -54,14 +55,17 @@ export class AppointmentsComponent implements OnInit, AfterViewInit, OnDestroy {
   currentAppointmentId: number;
   savedCreditCard: string;
   appointmentCreationFormSubmissionInProgress: boolean = false;
+  lastCancelationDate: Date;
+  isCancellable: boolean;
 
-  @ViewChild('cardInfo') cardInfo: ElementRef;
+  @ViewChild('cardInfo', { static: false }) cardInfo: ElementRef;
 
   constructor(
     private appointmentsService: AppointmentsService,
     private cd: ChangeDetectorRef,
     private authService: AuthenticationService,
-    private userService: UserService
+    private userService: UserService,
+    private angulartics2: Angulartics2
     ) { }
 
   ngAfterViewInit() {
@@ -113,18 +117,22 @@ export class AppointmentsComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(){
     this.isLoggedIn = this.authService.isAuthenticated();
     if(this.isLoggedIn){
-      this.appointmentsService.getAvailabilityMap().subscribe(
-        data => {
-          this.hasAvailabilityData = true;
-          this.availableDays = data[0];
-          this.availabilityMap = data[1];
-          this.model.date = this.availableDays[0].isoDay;
-          this.availableTimes = this.availabilityMap.get(this.model.date);
-          this.model.time = this.availableTimes[0].isoTime;
-        }
-      );
+      this.loadAvailabilityMap();
       this.populateUserInfo();
     }
+  }
+
+  loadAvailabilityMap(){
+    this.appointmentsService.getAvailabilityMap().subscribe(
+      data => {
+        this.hasAvailabilityData = true;
+        this.availableDays = data[0];
+        this.availabilityMap = data[1];
+        this.model.date = this.availableDays[0].isoDay;
+        this.availableTimes = this.availabilityMap.get(this.model.date);
+        this.model.time = this.availableTimes[0].isoTime;
+      }
+    );
   }
 
   populateUserInfo(){
@@ -160,10 +168,18 @@ export class AppointmentsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   processCurrentAppointment(slot: AppointmentSlot){
+    slot = new AppointmentSlot(slot.id, slot.start, slot.lastCancellation);
     let momentTime = moment(slot.start);
     this.currentAppointment =  momentTime.format("dddd, MMMM Do, YYYY [at] h:mm a");
     this.currentAppointmentId = slot.id;
     this.hasCurrentAppointment = true;
+    this.lastCancelationDate = slot.getLastCancellationDate();
+    this.isCancellable = new Date() < this.lastCancelationDate;
+    var timeUntilCancellationIsOver = this.lastCancelationDate.getTime() - (new Date()).getTime();
+    var that = this;
+    setTimeout(function(){
+      that.isCancellable = new Date() < that.lastCancelationDate;
+    }, timeUntilCancellationIsOver + 1000);
   }
 
   clearMessages(){
@@ -190,12 +206,9 @@ export class AppointmentsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.message = "There was a problem processing your credit card. Please try again later.";
         this.appointmentCreationFormSubmissionInProgress = false;
       } else {
-        console.log('Success!', token);
         this.appointmentsService.saveCreditCard(token.id).subscribe(message => {
-          console.log("Saved card", message)
           this.saveAppointment();
         }, error => {
-          console.log("Error saving card", error);
           this.alertClasses['alert-danger'] = true;
           this.alertClasses['alert-success'] = false;
           this.showMessage = true;
@@ -210,16 +223,19 @@ export class AppointmentsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   saveAppointment(){
-    console.log("Selected Date", this.model.date);
-    console.log("Selected Time", this.model.time);
     this.appointmentsService.createAppointment(this.model.date + "T" + this.model.time, this.model.notes).subscribe(response => {
-      console.log("Got response for making appointment.", response);
       if(response.slot){
         this.processCurrentAppointment(response.slot);
         this.alertClasses['alert-danger'] = false;
         this.alertClasses['alert-success'] = true;
         this.showMessage = true;
         this.message = "Your appointment was made for " + this.currentAppointment + ". Thank you!";
+        this.angulartics2.eventTrack.next({ 
+          action: 'created',
+          properties: { 
+            category: 'appointment'
+          },
+        });
       } else {
         this.alertClasses['alert-danger'] = true;
         this.alertClasses['alert-success'] = false;
@@ -251,11 +267,22 @@ export class AppointmentsComponent implements OnInit, AfterViewInit, OnDestroy {
       this.hasCurrentAppointment = false;
       this.currentAppointment = "";
       this.currentAppointmentId = 0;
+      this.isCancellable = false;
+      this.lastCancelationDate = null;
+
+      this.angulartics2.eventTrack.next({ 
+        action: 'cancelled',
+        properties: { 
+          category: 'appointment'
+        },
+      });
 
       this.alertClasses['alert-danger'] = false;
       this.alertClasses['alert-success'] = true;
       this.showMessage = true;
       this.message = message;
+      
+      this.loadAvailabilityMap();
     }, error => {
       console.error("Error canceling appointment.", error)
       this.alertClasses['alert-danger'] = true;
