@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "ng": "ng",
-    "build-test": "npm run copy-test && npm run env -s && ng build --configuration=test --subresource-integrity",
-    "build-prod": "npm run copy-prod && npm run env -s && ng build --prod --subresource-integrity",
-    "start": "ng serve --proxy-config proxy.conf.js",
+    "build-test": "npm run copy-test && npm run env -s --format json && ng build --configuration=test --subresource-integrity",
+    "build-prod": "npm run copy-prod && npm run env -s --format json && ng build --prod --subresource-integrity",
+    "start": "npm run env -s --format json && ng serve --aot --proxy-config proxy.conf.js",
     "lint": "ng lint --type-check && stylelint \"src/**/*.scss\" --syntax scss && htmlhint \"src\" --config .htmlhintrc",
     "test": "ng test",
     "test:ci": "npm run lint -s && ng test --single-run --code-coverage",
