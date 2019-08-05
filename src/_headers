@@ -2,7 +2,7 @@
   X-Frame-Options: DENY
   X-XSS-Protection: 1; mode=block; report=https://mikvah.report-uri.com/r/d/xss/enforce
   X-Content-Type-Options: nosniff
-  Content-Security-Policy-Report-Only: default-src 'self' js.stripe.com www.google-analytics.com; script-src 'self' 'unsafe-inline' js.stripe.com www.google-analytics.com; style-src 'self' 'unsafe-inline' ; img-src 'self' data: www.google-analytics.com stats.g.doubleclick.net www.google.com cdn.auth0.com; font-src 'self' fonts.gstatic.com data:; connect-src 'self' www.google-analytics.com js.stripe.com mikvah.report-uri.com stats.g.doubleclick.net mikvah.auth0.com api.rollbar.com www.google.com; frame-src js.stripe.com maps.google.com www.google.com; worker-src 'self' ; block-all-mixed-content; report-uri https://mikvah.report-uri.com/r/d/csp/reportOnly; object-src 'none'
+  Content-Security-Policy-Report-Only: default-src 'self' js.stripe.com www.google-analytics.com; script-src 'self' 'unsafe-inline' js.stripe.com www.google-analytics.com; style-src 'self' 'unsafe-inline' ; img-src 'self' data: www.google-analytics.com stats.g.doubleclick.net www.google.com cdn.auth0.com; font-src 'self' fonts.gstatic.com data:; connect-src 'self' www.google-analytics.com js.stripe.com mikvah.report-uri.com stats.g.doubleclick.net mikvah.auth0.com api.rollbar.com www.google.com cdn.auth0.com; frame-src js.stripe.com maps.google.com www.google.com; worker-src 'self' ; block-all-mixed-content; report-uri https://mikvah.report-uri.com/r/d/csp/reportOnly; object-src 'none'
   Referrer-Policy: same-origin
   Expect-CT: max-age=0, report-uri="https://mikvah.report-uri.com/r/d/ct/reportOnly"
   Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
