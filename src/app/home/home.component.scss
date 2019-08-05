@@ -19,7 +19,14 @@ q {
   padding-bottom: 1rem;
 }
 
+#spacer {
+  width: 200px;
+  height: 100px;
+  float: left;
+  display: block;
+}
+
 #auth0badge {
-  position: relative;
+  position: absolute;
   bottom: 1rem;
 }
