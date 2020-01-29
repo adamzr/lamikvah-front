@@ -8,6 +8,8 @@ import { AvailableTime } from './available-time';
 
 import { HttpClient } from '@angular/common/http';
 import { AppointmentCreationResponse } from './appointment-creation-response';
+import { stringLiteral } from 'babel-types';
+import { AvailableDateTimeAndType } from './available-datetime-and-type';
 
 const appointmentsAvailabilityPath = '/api/appointments/availability';
 const appointmentCreationPath = '/api/appointments';
@@ -20,10 +22,11 @@ export class AppointmentsService {
 
   constructor(private http: HttpClient) { }
 
-  createAppointment(time: string, notes: string): Observable<AppointmentCreationResponse> {
+  createAppointment(time: string, notes: string, roomType: string): Observable<AppointmentCreationResponse> {
     let appointmentRequest = {
       time: time,
-      notes: notes
+      notes: notes,
+      roomType: roomType
     }
     return this.http.post<AppointmentCreationResponse>(appointmentCreationPath, appointmentRequest);
  }
@@ -39,28 +42,36 @@ export class AppointmentsService {
      return this.http.post<string>(saveCreditCardPath, cardRequest);
   }
 
-  getAvailabilityMap(): Observable<[Array<AvailableDay>, Map<string, Array<AvailableTime>>]> {
-    return this.http.get<Array<string>>(appointmentsAvailabilityPath).pipe(map(times => {
-      let responseTuple : [Array<AvailableDay>, Map<string, Array<AvailableTime>>];
+  getAvailabilityMap(): Observable<[Array<AvailableDay>, Map<string, Map<string, Array<AvailableTime>>>]> {
+    return this.http.get<Array<AvailableDateTimeAndType>>(appointmentsAvailabilityPath).pipe(map(dateTimeAndTypes => {
+      let responseTuple : [Array<AvailableDay>, Map<string, Map<string, Array<AvailableTime>>>];
       let availableDays: Array<AvailableDay> = [];
-      let availabilityMap: Map<string, Array<AvailableTime>> = new Map<string, Array<AvailableTime>>();
-      for(let time of times){
+      let dateToRoomTypeToTimes: Map<string, Map<string, Array<AvailableTime>>> = new Map<string, Map<string, Array<AvailableTime>>>();
+      for(let dateTimeAndType of dateTimeAndTypes){
 
-        let momentTime = moment(time);
+        let momentTime = moment(dateTimeAndType.dateTime);
         let isoDay = momentTime.format("YYYY-MM-DD");
         
-        if(!availabilityMap.has(isoDay)){
+        if(!dateToRoomTypeToTimes.has(isoDay)){
           let displayDay = momentTime.format("dddd, MMMM D, Y");
           let availableDay = new AvailableDay(isoDay, displayDay);
           availableDays.push(availableDay);
-          availabilityMap.set(isoDay, []);
+          dateToRoomTypeToTimes.set(isoDay, new Map<string, AvailableTime[]>());
         }
         let isoTime = momentTime.format("HH:mm:ss");
         let displayTime = momentTime.format("LT");
         let availabilityTime = new AvailableTime(isoTime, displayTime);
-        availabilityMap.get(isoDay).push(availabilityTime);
+        
+        let roomTypeToTimes = dateToRoomTypeToTimes.get(isoDay);
+        let roomType = dateTimeAndType.roomType;
+        let times = roomTypeToTimes.get(roomType);
+        if(!times){
+          roomTypeToTimes.set(roomType, []);
+          times = roomTypeToTimes.get(roomType);
+        }
+        times.push(availabilityTime);
       }
-      responseTuple = [availableDays, availabilityMap];
+      responseTuple = [availableDays, dateToRoomTypeToTimes];
       return responseTuple;
     }));
   }

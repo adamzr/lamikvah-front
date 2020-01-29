@@ -19,8 +19,8 @@ import { User } from '../profile/user';
 import { UserService } from '../profile/user.service';
 import * as moment from 'moment';
 import { AppointmentSlot } from '../profile/appointment';
-import { lang } from 'moment';
 import { Angulartics2 } from '../../../node_modules/angulartics2';
+import * as _ from "lodash";
 
 @Component({
   selector: 'app-appointments',
@@ -43,8 +43,9 @@ export class AppointmentsComponent implements OnInit, AfterViewInit, OnDestroy {
   isMember: boolean;
   availableDays: Array<AvailableDay>;
   availableTimes: Array<AvailableTime>;
-  availabilityMap: Map<string, Array<AvailableTime>>;
-  model: AppointmentTime = new AppointmentTime("","", "saved", "");
+  availableRoomTypes: Array<string> = ["SHOWER", "BATH"];
+  dayToRoomTypeToAvailableTimes: Map<string, Map<string, Array<AvailableTime>>>;
+  model: AppointmentTime = new AppointmentTime("","", "SHOWER", "saved", "");
   card: any;
   cardHandler = this.onCardChange.bind(this);
   stripe: any;
@@ -110,8 +111,27 @@ export class AppointmentsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onDateSelectionChange(){
-    this.availableTimes = this.availabilityMap.get(this.model.date);
+    this.availableTimes = this.dayToRoomTypeToAvailableTimes.get(this.model.date).get(this.model.roomType);
+    if(this.availableTimes.length === 0){
+      if(this.model.roomType === "SHOWER"){
+        let bathTimes = this.dayToRoomTypeToAvailableTimes.get(this.model.date).get("BATH");
+        if(bathTimes.length > 0){
+          this.model.roomType = "BATH";
+          this.availableTimes = bathTimes;
+        }
+      } else {
+        let showerTimes = this.dayToRoomTypeToAvailableTimes.get(this.model.date).get("SHOWER");
+        if(showerTimes.length > 0){
+          this.model.roomType = "SHOWER";
+          this.availableTimes = showerTimes;
+        }
+      }
+    }
     this.model.time = this.availableTimes[0].isoTime;
+  }
+
+  onRoomTypeSelectionChange(){
+    this.availableTimes = this.dayToRoomTypeToAvailableTimes.get(this.model.date).get(this.model.roomType);
   }
 
   ngOnInit(){
@@ -127,9 +147,9 @@ export class AppointmentsComponent implements OnInit, AfterViewInit, OnDestroy {
       data => {
         this.hasAvailabilityData = true;
         this.availableDays = data[0];
-        this.availabilityMap = data[1];
+        this.dayToRoomTypeToAvailableTimes = data[1];
         this.model.date = this.availableDays[0].isoDay;
-        this.availableTimes = this.availabilityMap.get(this.model.date);
+        this.availableTimes = this.dayToRoomTypeToAvailableTimes.get(this.model.date).get(this.model.roomType);
         this.model.time = this.availableTimes[0].isoTime;
       }
     );
@@ -168,9 +188,9 @@ export class AppointmentsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   processCurrentAppointment(slot: AppointmentSlot){
-    slot = new AppointmentSlot(slot.id, slot.start, slot.lastCancellation);
+    slot = new AppointmentSlot(slot.id, slot.start, slot.lastCancellation, slot.roomType);
     let momentTime = moment(slot.start);
-    this.currentAppointment =  momentTime.format("dddd, MMMM Do, YYYY [at] h:mm a");
+    this.currentAppointment =  momentTime.format("dddd, MMMM Do, YYYY [at] h:mm a") + " (Room type: " +  _.startCase(_.lowerCase(slot.roomType)) + ")";
     this.currentAppointmentId = slot.id;
     this.hasCurrentAppointment = true;
     this.lastCancelationDate = slot.getLastCancellationDate();
@@ -223,7 +243,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   saveAppointment(){
-    this.appointmentsService.createAppointment(this.model.date + "T" + this.model.time, this.model.notes).subscribe(response => {
+    this.appointmentsService.createAppointment(this.model.date + "T" + this.model.time, this.model.notes, this.model.roomType).subscribe(response => {
       if(response.slot){
         this.processCurrentAppointment(response.slot);
         this.alertClasses['alert-danger'] = false;
