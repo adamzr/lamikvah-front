@@ -27,7 +27,6 @@
     "@angular/platform-browser": "^9.0.1",
     "@angular/platform-browser-dynamic": "^9.0.1",
     "@angular/platform-server": "^9.0.1",
-    "@angular/pwa": "^0.801.0",
     "@angular/router": "^9.0.1",
     "@angular/service-worker": "^9.0.1",
     "@auth0/angular-jwt": "^2.1.1",
@@ -43,11 +42,12 @@
     "moment": "^2.24.0",
     "rollbar": "^2.8.1",
     "rxjs": "6.5.4",
+    "tslib": "^1.10.0",
     "typed-countries": "^1.1.1",
-    "zone.js": "^0.10.2"
+    "zone.js": "~0.10.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.900.2",
+    "@angular-devkit/build-angular": "~0.900.2",
     "@angular/cli": "^9.0.2",
     "@angular/compiler-cli": "^9.0.1",
     "@angular/language-service": "^9.0.1",
@@ -56,8 +56,8 @@
     "@types/jasmine": "^3.3.13",
     "@types/jasminewd2": "^2.0.6",
     "@types/lodash": "^4.14.136",
-    "@types/node": "^12.6.0",
-    "codelyzer": "5.1.0",
+    "@types/node": "^12.11.1",
+    "codelyzer": "^5.1.2",
     "hads": "^2.0.0",
     "htmlhint": "^0.11.0",
     "https-proxy-agent": "^2.2.2",
