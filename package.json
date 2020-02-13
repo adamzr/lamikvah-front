@@ -19,17 +19,17 @@
     "copy-prod": "cp src/_redirects-prod src/_redirects"
   },
   "dependencies": {
-    "@angular/animations": "^8.1.0",
-    "@angular/common": "^8.1.0",
-    "@angular/compiler": "^8.1.0",
-    "@angular/core": "^8.1.0",
-    "@angular/forms": "^8.1.0",
-    "@angular/platform-browser": "^8.1.0",
-    "@angular/platform-browser-dynamic": "^8.1.0",
-    "@angular/platform-server": "^8.1.0",
+    "@angular/animations": "^9.0.1",
+    "@angular/common": "^9.0.1",
+    "@angular/compiler": "^9.0.1",
+    "@angular/core": "^9.0.1",
+    "@angular/forms": "^9.0.1",
+    "@angular/platform-browser": "^9.0.1",
+    "@angular/platform-browser-dynamic": "^9.0.1",
+    "@angular/platform-server": "^9.0.1",
     "@angular/pwa": "^0.801.0",
-    "@angular/router": "^8.1.0",
-    "@angular/service-worker": "^8.1.0",
+    "@angular/router": "^9.0.1",
+    "@angular/service-worker": "^9.0.1",
     "@auth0/angular-jwt": "^2.1.1",
     "@ng-bootstrap/ng-bootstrap": "^5.0.0-rc.1",
     "@types/auth0-js": "^9.10.2",
@@ -44,13 +44,13 @@
     "rollbar": "^2.8.1",
     "rxjs": "6.5.4",
     "typed-countries": "^1.1.1",
-    "zone.js": "^0.9.1"
+    "zone.js": "^0.10.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.803.25",
-    "@angular/cli": "^8.3.25",
-    "@angular/compiler-cli": "^8.1.0",
-    "@angular/language-service": "^8.1.0",
+    "@angular-devkit/build-angular": "^0.900.2",
+    "@angular/cli": "^9.0.2",
+    "@angular/compiler-cli": "^9.0.1",
+    "@angular/language-service": "^9.0.1",
     "@biesbjerg/ngx-translate-extract": "^4.2.0",
     "@ngx-rocket/scripts": "^4.0.0",
     "@types/jasmine": "^3.3.13",
@@ -77,6 +77,6 @@
     "stylelint-scss": "~3.9.0",
     "ts-node": "^8.3.0",
     "tslint": "~5.18.0",
-    "typescript": "3.4.5"
+    "typescript": "3.7.5"
   }
 }
