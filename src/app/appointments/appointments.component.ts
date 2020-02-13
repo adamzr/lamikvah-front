@@ -59,7 +59,7 @@ export class AppointmentsComponent implements OnInit, AfterViewInit, OnDestroy {
   lastCancelationDate: Date;
   isCancellable: boolean;
 
-  @ViewChild('cardInfo', { static: false }) cardInfo: ElementRef;
+  @ViewChild('cardInfo') cardInfo: ElementRef;
 
   constructor(
     private appointmentsService: AppointmentsService,

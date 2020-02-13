@@ -38,8 +38,8 @@ export class ProfileComponent implements OnInit {
     'alert-success':  false
   };
 
-  @ViewChild('cardInfo', { static: false }) cardInfo: ElementRef;
-  @ViewChild("messageElement", { static: false }) messageElement: ElementRef;
+  @ViewChild('cardInfo') cardInfo: ElementRef;
+  @ViewChild("messageElement") messageElement: ElementRef;
 
   constructor(
      private cd: ChangeDetectorRef,
