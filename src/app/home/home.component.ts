@@ -3,7 +3,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HoursService } from './hours.service';
 import { DisplayHours } from './display-hours';
-import * as moment from 'moment';
+import moment from 'moment';
 import { lang } from 'moment';
 
 
