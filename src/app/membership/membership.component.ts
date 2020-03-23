@@ -12,7 +12,7 @@ import { NgForm } from '@angular/forms';
 import { AuthenticationService } from '../core/authentication/authentication.service';
 import { User } from '../profile/user';
 import { UserService } from '../profile/user.service';
-import * as moment from 'moment';
+import moment from 'moment';
 import { AppointmentSlot } from '../profile/appointment';
 import { lang } from 'moment';
 import { Membership } from './membership';

@@ -17,10 +17,10 @@ import { NgForm } from '@angular/forms';
 import { AuthenticationService } from '../core/authentication/authentication.service';
 import { User } from '../profile/user';
 import { UserService } from '../profile/user.service';
-import * as moment from 'moment';
+import moment from 'moment';
 import { AppointmentSlot } from '../profile/appointment';
 import { Angulartics2 } from '../../../node_modules/angulartics2';
-import * as _ from "lodash";
+import _ from "lodash";
 
 @Component({
   selector: 'app-appointments',

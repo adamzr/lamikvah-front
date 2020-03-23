@@ -11,7 +11,7 @@ import { UserService } from '../../profile/user.service';
 import { environment } from '../../../environments/environment';
 
 import { RollbarService } from '../../rollbar';
-import * as Rollbar from 'rollbar';
+import Rollbar from 'rollbar';
 
 export interface Credentials {
   username: string;
