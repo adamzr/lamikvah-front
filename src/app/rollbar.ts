@@ -1,4 +1,4 @@
-import * as Rollbar from 'rollbar';
+import Rollbar from 'rollbar';
 import {
   Injectable,
   Inject,
