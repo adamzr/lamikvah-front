@@ -34,7 +34,7 @@
     "@ng-bootstrap/ng-bootstrap": "^5.2.2",
     "@types/auth0-js": "^9.12.4",
     "angulartics2": "^8.3.0",
-    "auth0-js": "^9.12.2",
+    "auth0-js": "^9.13.2",
     "bootstrap": "4.4.1",
     "core-js": "^3.6.4",
     "font-awesome": "^4.7.0",
