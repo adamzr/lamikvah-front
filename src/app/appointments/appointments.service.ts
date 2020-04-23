@@ -56,7 +56,10 @@ export class AppointmentsService {
           let displayDay = momentTime.format("dddd, MMMM D, Y");
           let availableDay = new AvailableDay(isoDay, displayDay);
           availableDays.push(availableDay);
-          dateToRoomTypeToTimes.set(isoDay, new Map<string, AvailableTime[]>());
+          let emptyRoomTypeToTimesMap : Map<string, AvailableTime[]> = new Map<string, AvailableTime[]>();
+          emptyRoomTypeToTimesMap.set("BATH", []);
+          emptyRoomTypeToTimesMap.set("SHOWER", []);
+          dateToRoomTypeToTimes.set(isoDay, emptyRoomTypeToTimesMap);
         }
         let isoTime = momentTime.format("HH:mm:ss");
         let displayTime = momentTime.format("LT");
