@@ -150,7 +150,9 @@ export class AppointmentsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.dayToRoomTypeToAvailableTimes = data[1];
         this.model.date = this.availableDays[0].isoDay;
         this.availableTimes = this.dayToRoomTypeToAvailableTimes.get(this.model.date).get(this.model.roomType);
-        this.model.time = this.availableTimes[0].isoTime;
+        if(this.availableTimes && this.availableTimes.length > 0){
+          this.model.time = this.availableTimes[0].isoTime;
+        }
       }
     );
   }
