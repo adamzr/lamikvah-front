@@ -132,6 +132,12 @@ export class AppointmentsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onRoomTypeSelectionChange(){
     this.availableTimes = this.dayToRoomTypeToAvailableTimes.get(this.model.date).get(this.model.roomType);
+    let isValidTime = _.filter(this.availableTimes, function(at){at.isoTime == this.model.time}).length != 0;
+    if(!isValidTime){
+      if(this.availableTimes.length > 0){
+        this.model.time = this.availableTimes[0].isoTime;
+      }
+    }
   }
 
   ngOnInit(){
@@ -218,10 +224,37 @@ export class AppointmentsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     this.appointmentCreationFormSubmissionInProgress = true;
     this.clearMessages();
+    if(!this.model.date){
+      console.error('Missing date');
+      this.alertClasses['alert-danger'] = true;
+      this.alertClasses['alert-success'] = false;
+      this.showMessage = true;
+      this.message = "Please choose an appointment date";
+      this.appointmentCreationFormSubmissionInProgress = false;
+      return;
+    }
+    if(!this.model.time){
+      console.error('Missing time');
+      this.alertClasses['alert-danger'] = true;
+      this.alertClasses['alert-success'] = false;
+      this.showMessage = true;
+      this.message = "Please choose an appointment time";
+      this.appointmentCreationFormSubmissionInProgress = false;
+      return;
+    }
+    if(!this.model.roomType){
+      console.error('Missing room type');
+      this.alertClasses['alert-danger'] = true;
+      this.alertClasses['alert-success'] = false;
+      this.showMessage = true;
+      this.message = "Please choose bath or shower";
+      this.appointmentCreationFormSubmissionInProgress = false;
+      return;
+    }
     if(!this.isMember && this.model.paymentMethod === "new"){
       const { token, error } = await this.stripe.createToken(this.card);
       if (error) {
-        console.log('Something is wrong:', error);
+        console.error('Something is wrong:', error);
         this.alertClasses['alert-danger'] = true;
         this.alertClasses['alert-success'] = false;
         this.showMessage = true;
