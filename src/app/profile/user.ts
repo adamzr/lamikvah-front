@@ -17,6 +17,7 @@ export class User {
     public stateCode: string,
     public postalCode: string,
     public notes: string,
+    public admin: boolean,
     public member: boolean,
     public membershipPlan: string,
     public membershipExpirationDate: string,

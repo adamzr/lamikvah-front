@@ -20,7 +20,7 @@ import { environment } from '../../environments/environment';
 })
 export class ProfileComponent implements OnInit {
 
-  model: User = new User(-1, "","","","","US","","","","","","","",false,"","",true,null,null);
+  model: User = new User(-1, "","","","","US","","","","","","","",false, false,"","",true,null,null);
   message: string = "";
   showMessage: boolean = false;
   hasNoProfile: boolean = true;
@@ -71,7 +71,7 @@ export class ProfileComponent implements OnInit {
         if(!this.model.stateCode){
           this.model.stateCode = "CA";
         }
-        
+
         if(this.model.defaultCard){
           this.hasSavedCard = true;
           this.savedCreditCard = this.model.defaultCard.brand + " ending in " + this.model.defaultCard.last4;
@@ -100,7 +100,7 @@ export class ProfileComponent implements OnInit {
 
     // Create an instance of the card Element
     this.card = elements.create('card', {style});
-    
+
   }
 
   ngAfterViewChecked(){
@@ -169,7 +169,7 @@ export class ProfileComponent implements OnInit {
         localStorage.setItem("hasProfile", "true");
 
         this.showSuccessMessage("Your profile was saved!");
-        
+
       },
       err => {
         console.error("Failed to save user!", err);
