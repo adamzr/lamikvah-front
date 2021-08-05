@@ -10,11 +10,13 @@ import { HttpClient } from '@angular/common/http';
 import { AppointmentCreationResponse } from './appointment-creation-response';
 import { stringLiteral } from 'babel-types';
 import { AvailableDateTimeAndType } from './available-datetime-and-type';
+import {Appointment} from '../admin/appointment';
 
 const appointmentsAvailabilityPath = '/api/appointments/availability';
 const appointmentCreationPath = '/api/appointments';
 const appointmentCancellationPath = '/api/appointments/';
 const saveCreditCardPath = '/api/credit-card';
+const adminAppointmentsViewPath = '/api/admin-daily-list';
 
 
 @Injectable()
@@ -42,6 +44,13 @@ export class AppointmentsService {
      return this.http.post<string>(saveCreditCardPath, cardRequest);
   }
 
+  getAppointmentScheduleFor(date: string): Observable<Array<Appointment>> {
+    const request = {
+      date: date
+    };
+    return this.http.post<Array<Appointment>>(adminAppointmentsViewPath, request);
+  }
+
   getAvailabilityMap(): Observable<[Array<AvailableDay>, Map<string, Map<string, Array<AvailableTime>>>]> {
     return this.http.get<Array<AvailableDateTimeAndType>>(appointmentsAvailabilityPath).pipe(map(dateTimeAndTypes => {
       let responseTuple : [Array<AvailableDay>, Map<string, Map<string, Array<AvailableTime>>>];
@@ -51,7 +60,7 @@ export class AppointmentsService {
 
         let momentTime = moment(dateTimeAndType.dateTime);
         let isoDay = momentTime.format("YYYY-MM-DD");
-        
+
         if(!dateToRoomTypeToTimes.has(isoDay)){
           let displayDay = momentTime.format("dddd, MMMM D, Y");
           let availableDay = new AvailableDay(isoDay, displayDay);
@@ -64,7 +73,7 @@ export class AppointmentsService {
         let isoTime = momentTime.format("HH:mm:ss");
         let displayTime = momentTime.format("LT");
         let availabilityTime = new AvailableTime(isoTime, displayTime);
-        
+
         let roomTypeToTimes = dateToRoomTypeToTimes.get(isoDay);
         let roomType = dateTimeAndType.roomType;
         let times = roomTypeToTimes.get(roomType);
