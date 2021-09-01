@@ -13,6 +13,7 @@ export class HeaderComponent implements OnInit {
 
   menuHidden = true;
   userName = "Mikvah User";
+  isAdmin = false;
 
   constructor(private router: Router,
               private authenticationService: AuthenticationService,
@@ -21,6 +22,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     if(this.authenticationService.isAuthenticated()){
       this.userService.getUserName().subscribe(data => {this.userName = data;});
+      this.userService.getUser().subscribe(user => {this.isAdmin = user.admin;});
     }
   }
 

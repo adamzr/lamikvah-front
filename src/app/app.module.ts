@@ -24,6 +24,7 @@ import { CallbackModule } from './auth0-callback/callback.module';
 import { DirectionsModule } from './directions/directions.module';
 import { DonationsModule } from './donations/donations.module';
 import { MensModule } from './mens/mens.module';
+import { AdminModule } from './admin/admin.module';
 
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
@@ -50,6 +51,7 @@ import { RollbarService, rollbarFactory, RollbarErrorHandler } from './rollbar';
     DirectionsModule,
     DonationsModule,
     MensModule,
+    AdminModule,
     CallbackModule,
     AppRoutingModule,
     Angulartics2Module.forRoot(),
