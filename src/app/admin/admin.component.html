@@ -3,7 +3,13 @@
     <div class="card-body">
       <div class="card" *ngIf="isLoggedIn && isAdmin">
         <div class="card-body">
-          <h4 class="card-title">Current Appointments</h4>
+          <h2 class="card-title">Appointments</h2>
+          <mat-form-field appearance="fill">
+            <input matInput [matDatepicker]="picker" placeholder="{{currentDatePacific | date: 'MM/dd/yyyy'}}"
+                   (dateInput)="getScheduleFor('input', $event)" (dateChange)="getScheduleFor('change', $event)">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
           <table class="table">
             <thead>
             <tr>

@@ -57,6 +57,7 @@
               "src/google866e4b10e7b64511.html"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/main.scss",
               "node_modules/font-awesome/css/font-awesome.css"
             ],
@@ -139,6 +140,7 @@
             "tsConfig": "src/tsconfig.spec.json",
             "scripts": [],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/main.scss",
               "node_modules/font-awesome/css/font-awesome.css"
             ],
