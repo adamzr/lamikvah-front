@@ -14,6 +14,7 @@ import {Appointment} from '../admin/appointment';
 
 const appointmentsAvailabilityPath = '/api/appointments/availability';
 const appointmentCreationPath = '/api/appointments';
+const appointmentModificationPath = '/api/appointments/';
 const appointmentCancellationPath = '/api/appointments/';
 const saveCreditCardPath = '/api/credit-card';
 const adminAppointmentsViewPath = '/api/admin-daily-list';
@@ -31,6 +32,13 @@ export class AppointmentsService {
       roomType: roomType
     }
     return this.http.post<AppointmentCreationResponse>(appointmentCreationPath, appointmentRequest);
+ }
+
+ editAppointment(id: number, time: string) {
+  let appointmentRequest = {
+    time: time
+  }
+  return this.http.post<AppointmentCreationResponse>(appointmentModificationPath + id, appointmentRequest);
  }
 
  cancelAppointment(id: number): Observable<string>{

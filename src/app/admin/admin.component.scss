@@ -4,12 +4,29 @@ table {
     width: 100%;
 }
   
-td, th {
-    border: 1px solid #dddddd;
+tr:nth-child(even) {
+    background-color: lightgrey;
+}
+
+a+a {
+    margin-left: 10px;
+}
+
+th.mat-header-cell {
+    font-weight: bold;
+    color: black;
+    border: 1px solid lightgrey;
     text-align: left;
     padding: 8px;
 }
-  
-tr:nth-child(even) {
-    background-color: #dddddd;
+
+td.mat-cell {
+    border: 1px solid lightgrey;
+    text-align: left;
+    padding: 8px;
+}
+
+.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }

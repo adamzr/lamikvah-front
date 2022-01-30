@@ -1,4 +1,7 @@
 <div class="container">
+  <div [ngClass]="alertClasses" role="alert" *ngIf="showMessage">
+    {{message}}
+  </div>  
   <div class="card">
     <div class="card-body">
       <div class="card" *ngIf="isLoggedIn && isAdmin">
@@ -10,31 +13,62 @@
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
-          <table class="table">
-            <thead>
-            <tr>
-              <th>Time</th>
-              <th>Room Type</th>
-              <th>Title</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Notes</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let appointment of schedule">
-              <td>{{ appointment.time }}</td>
-              <td>{{ appointment.roomType | titlecase }}</td>
-              <td>{{ appointment.title }}</td>
-              <td>{{ appointment.firstName }}</td>
-              <td>{{ appointment.lastName }}</td>
-              <td>{{ appointment.email }}</td>
-              <td>{{ appointment.phoneNumber }}</td>
-              <td>{{ appointment.notes }}</td>
-            </tr>
-            </tbody>
+          <table mat-table [dataSource]="schedule" #scheduleTable class="schedule-table mat-elevation-z8">
+            <!-- Time Column -->
+            <ng-container matColumnDef="time">
+              <th mat-header-cell *matHeaderCellDef> Time </th>
+              <td mat-cell *matCellDef="let appointment"> {{appointment.time}} </td>
+            </ng-container>
+            <!-- Room Type Column -->
+            <ng-container matColumnDef="roomType">
+              <th mat-header-cell *matHeaderCellDef> Room Type </th>
+              <td mat-cell *matCellDef="let appointment"> {{appointment.roomType}} </td>
+            </ng-container>
+            <!-- Title Column -->
+            <ng-container matColumnDef="title">
+              <th mat-header-cell *matHeaderCellDef> Title </th>
+              <td mat-cell *matCellDef="let appointment"> {{appointment.title}} </td>
+            </ng-container>
+            <!-- First Name Column -->
+            <ng-container matColumnDef="firstName">
+              <th mat-header-cell *matHeaderCellDef> First Name </th>
+              <td mat-cell *matCellDef="let appointment"> {{appointment.firstName}} </td>
+            </ng-container>
+            <!-- Last Name Column -->
+            <ng-container matColumnDef="lastName">
+              <th mat-header-cell *matHeaderCellDef> Last Name </th>
+              <td mat-cell *matCellDef="let appointment"> {{appointment.lastName}} </td>
+            </ng-container>
+            <!-- Email Column -->
+            <ng-container matColumnDef="email">
+              <th mat-header-cell *matHeaderCellDef> Email </th>
+              <td mat-cell *matCellDef="let appointment"> {{appointment.email}} </td>
+            </ng-container>
+            <!-- Phone Number Column -->
+            <ng-container matColumnDef="phone">
+              <th mat-header-cell *matHeaderCellDef> Phone </th>
+              <td mat-cell *matCellDef="let appointment"> {{appointment.phoneNumber}} </td>
+            </ng-container>
+            <!-- Notes Column -->
+            <ng-container matColumnDef="notes">
+              <th mat-header-cell *matHeaderCellDef> Notes </th>
+              <td mat-cell *matCellDef="let appointment"> {{appointment.notes}} </td>
+            </ng-container>
+             <!-- Action Column -->
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef> Action </th>
+              <td mat-cell *matCellDef="let element" class="action-link"> 
+                <a (click)="openDialog('Update',element)">
+                  <i [ngClass]="{'fa fa-pencil': true, 'disabled': !allowEdits}"></i>
+                </a> 
+                <a (click)="openDialog('Delete',element)">
+                  <i [ngClass]="{'fa fa-trash': true, 'disabled': !allowEdits}"></i>
+                </a>  
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
         </div>
       </div>
