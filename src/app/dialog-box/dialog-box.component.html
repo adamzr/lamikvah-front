@@ -9,7 +9,8 @@
         </div>
   </mat-form-field>
   <ng-template #elseTemplate>
-    Delete <b>{{local_data.obj.time}}</b> appointment for <b>{{local_data.obj.email}}</b>?
+    Delete <b>{{local_data.obj.time}}</b> appointment for <b>{{local_data.obj.email}}</b>? 
+    <br><small>Deleting the appointment will cause any payments to be refunded.</small>
   </ng-template>
 </div>
 <div mat-dialog-actions>
