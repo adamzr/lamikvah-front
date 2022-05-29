@@ -1,0 +1,19 @@
+<div mat-dialog-content>
+  <mat-form-field *ngIf="action != 'Delete'; else elseTemplate">
+     <div class="form-group">
+          <label for="time">Time</label>
+          <select class="form-control" id="time" name="time" [(ngModel)]="local_data.time" #timeField="ngModel" required>
+            <option *ngFor="let time of local_data.times; let i = index" [value]="time.isoTime">{{time.displayTime}}
+            </option>
+          </select>
+        </div>
+  </mat-form-field>
+  <ng-template #elseTemplate>
+    Delete <b>{{local_data.obj.time}}</b> appointment for <b>{{local_data.obj.email}}</b>? 
+    <br><small>Deleting the appointment will cause any payments to be refunded.</small>
+  </ng-template>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="doAction()">{{action}}</button>
+  <button mat-button (click)="closeDialog()">Cancel</button>
+</div>

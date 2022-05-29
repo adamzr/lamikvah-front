@@ -34,6 +34,8 @@ import { Angulartics2Module } from 'angulartics2';
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
 
 import { RollbarService, rollbarFactory, RollbarErrorHandler } from './rollbar';
+import { DialogBoxComponent } from './dialog-box/dialog-box.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   imports: [
@@ -55,9 +57,10 @@ import { RollbarService, rollbarFactory, RollbarErrorHandler } from './rollbar';
     CallbackModule,
     AppRoutingModule,
     Angulartics2Module.forRoot(),
-    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
+    BrowserAnimationsModule
   ],
-  declarations: [AppComponent],
+  declarations: [AppComponent, DialogBoxComponent],
   providers: [
     { provide: ErrorHandler, useClass: RollbarErrorHandler },
     { provide: RollbarService, useFactory: rollbarFactory }
