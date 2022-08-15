@@ -88,7 +88,7 @@ export class AdminComponent implements OnInit {
     }
   }
 
-  openDialog(action: any, obj: { action: any, id: number, roomType: string}) {
+  openDialog(action: any, obj: { action: any, id: number, roomType: string, notes: string}) {
     obj.action = action;
     this.selectedId = obj.id;
     this.selectedRoomType = obj.roomType;
@@ -116,8 +116,9 @@ export class AdminComponent implements OnInit {
       });
   }
 
-  updateRowData(data: {obj: { action: any, id: number, roomType: string}, time: string }){
-    this.appointmentsService.editAppointment(data.obj.id, this.selectedDate + "T" + data.time)
+  updateRowData(data: {obj: { action: any, id: number, roomType: string, notes: string}, time: string }){
+    let requestedTime = data.time ? this.selectedDate + "T" + data.time : null;
+    this.appointmentsService.editAppointment(data.obj.id, requestedTime, data.obj.notes)
       .subscribe(response => {
         this.alertClasses['alert-danger'] = false;
         this.alertClasses['alert-success'] = true;
