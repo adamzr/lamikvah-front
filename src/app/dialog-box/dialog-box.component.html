@@ -1,13 +1,18 @@
 <div mat-dialog-content>
-  <mat-form-field *ngIf="action != 'Delete'; else elseTemplate">
-     <div class="form-group">
-          <label for="time">Time</label>
-          <select class="form-control" id="time" name="time" [(ngModel)]="local_data.time" #timeField="ngModel" required>
+  <form *ngIf="action != 'Delete'; else elseTemplate">
+    <div class="form-group">
+          <label for="time" translate>Time</label>
+          <select class="form-control" id="time" name="time" [(ngModel)]="local_data.time" #timeField="ngModel">
             <option *ngFor="let time of local_data.times; let i = index" [value]="time.isoTime">{{time.displayTime}}
             </option>
           </select>
-        </div>
-  </mat-form-field>
+      </div>
+      <div class="form-group">
+        <label for="notes" translate>Notes</label>
+        <textarea [(ngModel)]="local_data.obj.notes" #notes="ngModel" type="text" class="form-control" id="notes"
+          name="notes"></textarea>
+      </div>
+    </form>
   <ng-template #elseTemplate>
     Delete <b>{{local_data.obj.time}}</b> appointment for <b>{{local_data.obj.email}}</b>? 
     <br><small>Deleting the appointment will cause any payments to be refunded.</small>

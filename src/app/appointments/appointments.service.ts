@@ -34,9 +34,10 @@ export class AppointmentsService {
     return this.http.post<AppointmentCreationResponse>(appointmentCreationPath, appointmentRequest);
  }
 
- editAppointment(id: number, time: string) {
+ editAppointment(id: number, time: string, notes: string) {
   let appointmentRequest = {
-    time: time
+    time: time,
+    notes: notes
   }
   return this.http.post<AppointmentCreationResponse>(appointmentModificationPath + id, appointmentRequest);
  }
